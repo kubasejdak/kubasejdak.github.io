@@ -1,0 +1,35 @@
+{
+    "name": "embeddedlinux.pl node:21-22.04",
+    "image": "embeddedlinux/node:21-22.04",
+    "mounts": [
+        "source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "npm install -g gatsby-cli@latest",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dsznajder.es7-react-js-snippets",
+                "tamasfe.even-better-toml",
+                "waderyan.gitblame",
+                "github.vscode-github-actions",
+                "github.vscode-pull-request-github",
+                "graphql.vscode-graphql-syntax",
+                "ms-vscode.live-server",
+                "ms-vsliveshare.vsliveshare",
+                "yzhang.markdown-all-in-one",
+                "bierner.markdown-mermaid",
+                "davidanson.vscode-markdownlint",
+                "pkief.material-icon-theme",
+                "unifiedjs.vscode-mdx",
+                "esbenp.prettier-vscode",
+                "chrmarti.regex",
+                "styled-components.vscode-styled-components",
+                "redhat.vscode-yaml"
+            ]
+        }
+    },
+    "runArgs": [
+        "--network=host"
+    ]
+}
