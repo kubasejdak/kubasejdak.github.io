@@ -14,3 +14,4 @@ jobs:
         with:
           access-token: ${{ secrets.ACCESS_TOKEN }}
           working-dir: kubasejdak.com
+          deploy-branch: gh-pages
