@@ -3,7 +3,7 @@ name: Gatsby Publish
 on:
   push:
     branches:
-      - feature/add-initial-site
+      - main
 
 jobs:
   build:
