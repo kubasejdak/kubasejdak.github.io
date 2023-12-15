@@ -2,8 +2,8 @@
     "name": "embeddedlinux.pl node:21-22.04",
     "image": "embeddedlinux/node:21-22.04",
     "mounts": [
-        "source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
-        "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/.gitconfig,target=/home/builder/.gitconfig,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.ssh,target=/home/builder/.ssh,type=bind,consistency=cached"
     ],
     "postCreateCommand": "npm install -g gatsby-cli@latest",
     "customizations": {
