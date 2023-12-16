@@ -1,0 +1,26 @@
+{
+  "name": "kubasejdak.com",
+  "version": "1.0.0",
+  "private": true,
+  "description": "kubasejdak.com",
+  "author": "Sejdak, Jakub",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "deploy": "gatsby build && gh-pages -d public -b gh-pages"
+  },
+  "dependencies": {
+    "gatsby": "^5.12.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.0"
+  }
+}
