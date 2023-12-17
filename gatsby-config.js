@@ -6,5 +6,5 @@ module.exports = {
     title: `kubasejdak.com`,
     siteUrl: `https://kubasejdak.com`,
   },
-  plugins: [],
+  plugins: ["gatsby-plugin-image", "gatsby-plugin-sharp"],
 };
