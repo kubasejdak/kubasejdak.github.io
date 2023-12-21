@@ -1,0 +1,31 @@
+.container {
+  padding: 20px;
+  height: 850px;
+  width: 100%;
+  display: flex;
+}
+
+.container div {
+  margin: 10px;
+  width: 200px;
+}
+
+.blue {
+  background-color: deepskyblue;
+  min-height: 100px;
+}
+
+.green {
+  background-color: chartreuse;
+  min-height: 100px;
+}
+
+.yellow {
+  background-color: khaki;
+  min-height: 100px;
+}
+
+.red {
+  background-color: indianred;
+  min-height: 100px;
+}
