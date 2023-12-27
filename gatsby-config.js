@@ -29,7 +29,7 @@ module.exports = {
               // Defaults to false.
               // If you wish to only show line numbers on certain code blocks,
               // leave false and use the {numberLines: true} syntax below
-              showLineNumbers: true,
+              showLineNumbers: false,
               noInlineHighlight: false,
               // Customize the prompt used in shell output
               // Values below are default
