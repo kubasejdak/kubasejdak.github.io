@@ -125,9 +125,9 @@ all variadic arguments are converted in the following way:
 It is really important to remember, because it's not obvious. For example: if you pass the `char` or `bool`, you still
 have to extract an `int`! Here is an example:
 
-```cpp {numberLines: true}
+```cpp {numberLines: true}{8}
 #include <cstdarg>
- 
+
 void func2(int count...)
 {
     va_list ap; 
