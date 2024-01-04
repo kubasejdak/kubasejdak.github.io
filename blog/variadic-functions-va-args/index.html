@@ -1,0 +1,165 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 5.13.1"/><style data-href="/styles.0ba78ddeb512cab3412c.css" data-identity="gatsby-global-css">code[class*=language-],pre[class*=language-]{word-wrap:normal;background:none;color:#fff;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;tab-size:4;text-align:left;text-shadow:0 -.1em .2em #000;white-space:pre;word-break:normal;word-spacing:normal}:not(pre)>code[class*=language-],pre[class*=language-]{background:#141414}pre[class*=language-]{border:.3em solid #545454;border-radius:.5em;box-shadow:inset 1px 1px .5em #000;margin:.5em 0;overflow:auto;padding:1em}pre[class*=language-]::selection{background:#27292a}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{background:hsla(0,0%,93%,.15);text-shadow:none}:not(pre)>code[class*=language-]{border:.13em solid #545454;border-radius:.3em;box-shadow:inset 1px 1px .3em -.1em #000;padding:.15em .2em .05em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#787878}.token.namespace,.token.punctuation{opacity:.7}.token.boolean,.token.deleted,.token.number,.token.tag{color:#cf694a}.token.builtin,.token.constant,.token.keyword,.token.property,.token.selector,.token.symbol{color:#f9ee9a}.language-css .token.string,.style .token.string,.token.attr-name,.token.attr-value,.token.char,.token.entity,.token.inserted,.token.operator,.token.string,.token.url,.token.variable{color:#919e6b}.token.atrule{color:#7386a5}.token.important,.token.regex{color:#e9c163}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.language-markup .token.attr-name,.language-markup .token.punctuation,.language-markup .token.tag{color:#ad895c}.token{position:relative;z-index:1}.line-highlight.line-highlight{background:rgba(84,84,84,.25);background:linear-gradient(90deg,rgba(84,84,84,.1) 70%,rgba(84,84,84,0));border-bottom:1px dashed #545454;border-top:1px dashed #545454;margin-top:.75em;z-index:0}.line-highlight.line-highlight:before,.line-highlight.line-highlight[data-end]:after{background-color:#8794a6;color:#f5f2f0}pre[class*=language-].line-numbers{counter-reset:linenumber;padding-left:3.8em;position:relative}pre[class*=language-].line-numbers>code{position:relative;white-space:inherit}.line-numbers .line-numbers-rows{border-right:1px solid #999;font-size:100%;left:-3.8em;letter-spacing:-1px;pointer-events:none;position:absolute;top:0;-webkit-user-select:none;user-select:none;width:3em}.line-numbers-rows>span{counter-increment:linenumber;display:block}.line-numbers-rows>span:before{color:#999;content:counter(linenumber);display:block;padding-right:.8em;text-align:right}.gatsby-highlight pre[class*=language-].line-numbers{padding:0 0 0 2.8em;width:100%}.gatsby-highlight-code-line{background-color:rgba(80,81,87,.795);border-left:.25em solid #f99;display:block;margin-left:-1.5em;padding-left:.75em;text-shadow:none}.layout-module--container--78b04{font-family:sans-serif;margin:auto;max-width:1500px}.layout-module--heading--f158c{color:#639}.layout-module--nav-links--1113b{display:flex;list-style:none;padding-left:0}.layout-module--nav-link-item--a5f0a{padding-right:2rem}.layout-module--nav-link-text--69cda{color:#000}.layout-module--site-title--e4dea{color:gray;font-size:3rem;font-weight:700;margin:3rem 0}.layout-module--container--55bf4{display:flex;height:850px;padding:20px;width:100%}.layout-module--container--55bf4 div{margin:10px;width:200px}.layout-module--blue--97a68{background-color:#00bfff;min-height:100px}.layout-module--green--3a32c{background-color:#7fff00;min-height:100px}.layout-module--yellow--b2c38{background-color:khaki;min-height:100px}.layout-module--red--824ae{background-color:#cd5c5c;min-height:100px}</style><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><title data-gatsby-head="true">Variadic functions - Part 1: va_args and friends | kubasejdak.com</title></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="layout-module--container--78b04"><header class="layout-module--site-title--e4dea">kubasejdak.com</header><nav><ul class="layout-module--nav-links--1113b"><li class="layout-module--nav-link-item--a5f0a"><a class="layout-module--nav-link-text--69cda" href="/">Home</a></li><li class="layout-module--nav-link-item--a5f0a"><a class="layout-module--nav-link-text--69cda" href="/about">About</a></li><li class="layout-module--nav-link-item--a5f0a"><a class="layout-module--nav-link-text--69cda" href="/blog">Blog</a></li></ul></nav><main><h1 class="layout-module--heading--f158c">Variadic functions - Part 1: va_args and friends</h1><p>Posted: <!-- -->May 11, 2019</p><p>In the series:</p>
+<ul>
+<li><a href="/variadic-functions-va-args">Variadic functions - Part 1: va_args and friends</a></li>
+<li>Variadic functions - Part 2: C++11 variadic templates</li>
+<li>Variadic functions - Part 3: techniques of variadic templates</li>
+</ul>
+<p>From time to time there is a need to write a function, that accepts an unspecified number of arguments. In C++ we have
+multiple ways of handling this depending on the context, use case and available language features. But the oldest and
+still most commonly used mechanism is the <code>va_arg</code>.</p>
+<p>You think nothing can surprise you? Let&#x27;s bet.</p>
+<h2>TOC</h2>
+<h2>va_arg in a nutshell</h2>
+<p><a href="https://en.cppreference.com/w/cpp/utility/variadic">Variadic function</a> by definition takes a variable number of
+arguments. C and C++ provide a builtin way of expressing this in the argument list by using the ellipsis (<code>...</code>).</p>
+<p>Here is a function, that accepts two doubles and an unknown number of other arguments:</p>
+<span><div class="gatsby-highlight" data-language="cpp"><pre style="counter-reset: linenumber 0" class="language-cpp line-numbers"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">double</span> a<span class="token punctuation">,</span> <span class="token keyword">double</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> count<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Some operations...</span>
+<span class="token punctuation">}</span></code><span aria-hidden="true" class="line-numbers-rows" style="white-space: normal; width: auto; left: 0;"><span></span><span></span><span></span><span></span></span></pre></div></span>
+<p>In the example we provide an additional information to the function - number of arguments that are hidden behind the
+trailing ellipsis. It looks like an optional hint to the function implementer, but in fact it is required by the
+<a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2346.pdf">C standard</a> (<a href="http://eel.is/c++draft/cstdarg.syn">C++refers</a>
+to C on this matter).</p>
+<p>Valid usage of <code>va_args</code> in C++ requires that:</p>
+<ul>
+<li>ellipsis must be last in the arguments list,</li>
+<li>last named parameter must define the count of variadic arguments,</li>
+<li>ellipsis can be preceded with an optional comma.</li>
+</ul>
+<hr/>
+<p>Note:</p>
+<p>C++ added an optional comma before the ellipsis to be compatible with C, where comma is obligatory.</p>
+<hr/>
+<p>The standard library provides the <a href="https://en.cppreference.com/w/cpp/header/cstdarg"><code>&lt;cstdarg&gt;</code></a> header with the
+following tools to work with the variadic arguments:</p>
+<ul>
+<li><code>va_list</code> - helper type, that represents the variadic arguments list,</li>
+<li><code>va_start()</code> - initializes the va_list object in the current function,</li>
+<li><code>va_arg()</code> - extracts the next variadic argument,</li>
+<li><code>va_end()</code> - destroys the va_list object.</li>
+</ul>
+<p>The va_list type is implementation-defined and shouldn&#x27;t be accessed directly. Its only purpose is to be used by the
+<code>va_*</code> macros family. The exact definition is usually provided by a builtin in the compiler and depends on the CPU and
+ABI (Application Binary Interface), which defines the calling convention (how arguments are passed from caller to the
+callee).</p>
+<hr/>
+<p>For the curious:</p>
+<p>Here are two example implementations found in the wild:</p>
+<ul>
+<li>pointer to the stack (<a href="https://opensource.apple.com/source/xnu/xnu-792.13.8/EXTERNAL_HEADERS/stdarg.h">old Apple kernel implementation</a>),</li>
+<li>custom structure (<a href="https://software.intel.com/sites/default/files/article/402129/mpx-linux64-abi.pdf">System V AMD64 ABI specification</a>).</li>
+</ul>
+<hr/>
+<p><code>va_start()</code> macro initializes the <code>va_list</code> object using the number of expected variadic arguments. It is required to
+be called before any access to the variable arguments.</p>
+<p>The central role of the happy variadic family plays the <code>va_arg()</code> function macro. It is used to extract the argument of
+the given type from the current parameters list&#x27;s head. We can visualize this process as casting the varargs pointer to
+the demanded type and moving it later by the size of the type.</p>
+<p><code>va_end()</code> macro destroys the helper object and has to be called in the same function as the corresponding <code>va_start()</code>
+call. It also must be called before any redefinition of there <code>va_list</code> type.</p>
+<p>Here is a complete example of a valid variadic function usage:</p>
+<span><div class="gatsby-highlight" data-language="cpp"><pre style="counter-reset: linenumber 0" class="language-cpp line-numbers"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdarg></span></span>
+
+<span class="token keyword">int</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    va_list args<span class="token punctuation">;</span>
+    <span class="token function">va_start</span><span class="token punctuation">(</span>args<span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token function">va_arg</span><span class="token punctuation">(</span>args<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">+=</span> num<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">va_end</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code><span aria-hidden="true" class="line-numbers-rows" style="white-space: normal; width: auto; left: 0;"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></pre></div></span>
+<p>Feel free to play and inspect this example on different platforms and compiler using
+<a href="https://godbolt.org/z/nD5OAZ">Compiler Explorer</a>.</p>
+<h2>Default type promotion</h2>
+<p>There is one interesting process that happens behind the scenes when using variadic arguments. The C standard states,
+that all unnamed arguments that are part of the variadic list are subject to the default type promotion. It means, that
+all variadic arguments are converted in the following way:</p>
+<ul>
+<li><code>std::nullptr_t</code> is converted to <code>void*</code>,</li>
+<li><code>float</code> arguments are converted to <code>double</code>,</li>
+<li><code>bool</code>, <code>char</code>, <code>short</code> and unscoped enumerations are converted to <code>int</code> or wider integer types.</li>
+</ul>
+<p>It is really important to remember, because it&#x27;s not obvious. For example: if you pass the <code>char</code> or <code>bool</code>, you still
+have to extract an <code>int</code>! Here is an example:</p>
+<span><div class="gatsby-highlight has-highlighted-lines" data-language="cpp"><pre style="counter-reset: linenumber 0" class="language-cpp line-numbers"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdarg></span></span>
+
+<span class="token keyword">void</span> <span class="token function">func2</span><span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    va_list ap<span class="token punctuation">;</span> 
+    <span class="token function">va_start</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="gatsby-highlight-code-line">    <span class="token keyword">auto</span> b <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token function">va_arg</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+    <span class="token function">va_end</span><span class="token punctuation">(</span>ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">func2</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code><span aria-hidden="true" class="line-numbers-rows" style="white-space: normal; width: auto; left: 0;"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></pre></div></span>
+<h2>Sources of the undefined behavior</h2>
+<p>Variadic arguments from <code>&lt;cstdarg&gt;</code> is a simple mechanism. However, it is easy to introduce some serious bugs to your
+program if you are not careful. Here is the list of rules to obey to avoid the UB while using <code>va_args</code>:</p>
+<ol>
+<li>Do not pass parameters count to <code>va_args</code> by reference.</li>
+<li>Always define variadic arguments count to be the last named parameter (right before the ellipsis).</li>
+<li>Do not use <code>va_list</code> before calling <code>va_start()</code> first.</li>
+<li>Do not use <code>va_list</code> after calling <code>va_end()</code>.</li>
+<li>Do not call <code>va_end()</code> in a different function that corresponding <code>va_start()</code>.</li>
+<li>Do not call <code>va_start()</code> on the previously initialized object without calling <code>va_end()</code> first.</li>
+<li>Do not call <code>va_arg()</code> more times than the actual number of arguments.</li>
+<li>Do not call <code>va_arg()</code> with the incorrect type.</li>
+</ol>
+<hr/>
+<p>Remember:</p>
+<p>It doesn&#x27;t matter that you checked the violated rule and it works. It is just luck.</p>
+<hr/>
+<h2>Static analysis</h2>
+<p>Variadic arguments are operating directly on the stack arguments, so no wonder why this API has so many constraints. But
+fear not! Your favorite compiler is here to help. It turns out, that both GCC and Clang have the default <code>-Wvarargs</code>
+warning enabled. They can check if you are providing the number of hidden arguments in the arguments list, if this
+parameter is right before the ellipsis and if by any chance you are passing a reference to the <code>va_start</code> macro.</p>
+<p>It is also checked by the popular static analyzers: clang-tidy and Parasoft C/C++ Static Analyzer.</p>
+<h2>Alternatives to va_arg</h2>
+<p>Presented <code>va_arg</code> mechanism from <code>&lt;cstdarg&gt;</code> is no the only way to implement the variadic functions. In specific use
+cases you can use other alternatives:</p>
+<ul>
+<li>function overloads - handy in a situation, where there are not that many combinations of the arguments and they are
+handled in a different way,</li>
+<li>function accepting a container of arguments (e.g. <code>std::vector</code>, <code>std::array</code> or <code>std::initializer_list</code>) - this
+approach can be used only if arguments share a common type. Of course, we can use the type erasure technique
+(<code>std::any</code>, <code>std::variant</code>), but it will add another layer to the solution making it harder to understand,</li>
+<li>variadic templates - which will be discussed in the second part of this article.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Variadic functions with <code>va_arg</code> support have both pros and cons. They give you freedom and flexibility in handling
+particular tasks. But also they require a strict contract between the caller and the callee, which is hard to maintain.
+They are not type safe (only rely on the contract) and can lead to undefined behavior. There are multiple
+recommendations to avoid it (e.g. <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#f55-dont-use-va_arg-arguments">C++ Core Guidelines</a>
+and <a href="https://wiki.sei.cmu.edu/confluence/display/cplusplus/DCL50-CPP.+Do+not+define+a+C-style+variadic+function">SEI CERT C++ Coding Standard</a>),
+which I agree with. However I you have no other option or you have to use an API that already takes the <code>va_args</code> - be
+careful and RTFM!</p>
+<h2>Subscribe</h2>
+<p>In the series:</p>
+<ul>
+<li><a href="/variadic-functions-va-args">Variadic functions - Part 1: va_args and friends</a></li>
+<li>Variadic functions - Part 2: C++11 variadic templates</li>
+<li>Variadic functions - Part 3: techniques of variadic templates</li>
+</ul></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/blog/variadic-functions-va-args";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            window.___chunkMapping="{\"app\":[\"/app-d56f90a6b1fd91ba1061.js\"],\"component---src-pages-404-js\":[\"/component---src-pages-404-js-efb1dec4c29c0bbacc64.js\"],\"component---src-pages-about-js\":[\"/component---src-pages-about-js-d4892af0c7f8e724ebd3.js\"],\"component---src-pages-blog-index-js\":[\"/component---src-pages-blog-index-js-e419bbde7e2807c9127c.js\"],\"component---src-pages-blog-mdx-frontmatter-slug-js-content-file-path-blog-2018-05-22-let-the-games-begin-index-mdx\":[\"/component---src-pages-blog-mdx-frontmatter-slug-js-content-file-path-blog-2018-05-22-let-the-games-begin-index-mdx-0f459f0442a728d74243.js\"],\"component---src-pages-blog-mdx-frontmatter-slug-js-content-file-path-blog-2019-05-11-variadic-functions-va-args-index-mdx\":[\"/component---src-pages-blog-mdx-frontmatter-slug-js-content-file-path-blog-2019-05-11-variadic-functions-va-args-index-mdx-6a4b7744105a96619881.js\"],\"component---src-pages-index-js\":[\"/component---src-pages-index-js-d7003bb9a64d5f142512.js\"],\"component---src-pages-layout-js\":[\"/component---src-pages-layout-js-0d823e8803772479ff4d.js\"]}";
+          </script>
+        <script>window.___webpackCompilationHash="760ac426beb593359598";</script><script src="/webpack-runtime-d6b5e678f434effdb946.js" async></script><script src="/framework-3337002008e03a8ce48f.js" async></script><script src="/app-d56f90a6b1fd91ba1061.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
