@@ -1,0 +1,26 @@
+{
+    "name": "kubasejdak hugo:20-24.04",
+    "image": "kubasejdak/hugo:20-24.04",
+    "mounts": [
+        "source=${localEnv:HOME}/.gitconfig,target=/home/builder/.gitconfig,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.ssh,target=/home/builder/.ssh,type=bind,consistency=cached"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bradlc.vscode-tailwindcss",
+                "budparr.language-hugo-vscode",
+                "github.copilot",
+                "github.vscode-github-actions",
+                "mads-hartmann.bash-ide-vscode",
+                "ms-vsliveshare.vsliveshare",
+                "tamasfe.even-better-toml",
+                "waderyan.gitblame",
+                "yzhang.markdown-all-in-one"
+            ]
+        }
+    },
+    "runArgs": [
+        "--network=host"
+    ]
+}
