@@ -2,62 +2,37 @@
 
 # main menu
 [[main]]
-name = "Home"
+name = "HOME"
 url = "/"
 weight = 1
 
 [[main]]
-name = "About"
-url = "/about"
+name = "SERVICES"
+url = "/services"
 weight = 2
 
 [[main]]
-name = "Elements"
-url = "/elements"
+name = "BLOG"
+url = "/blog"
 weight = 3
 
 [[main]]
+name = "PROJECTS"
+url = "https://github.com/kubasejdak-org"
 weight = 4
-name = "Pages"
 
 [[main]]
-parent = "Pages"
-name = "Blog"
-url = "/blog"
-
-[[main]]
-parent = "Pages"
-name = "Contact"
-url = "/contact"
-
-[[main]]
-parent = "Pages"
-name = "Authors"
-url = "/authors"
-
-[[main]]
-parent = "Pages"
-name = "Categories"
-url = "/categories"
-
-[[main]]
-parent = "Pages"
-name = "404 Page"
-url = "/404"
-
+name = "ABOUT ME"
+url = "/about"
+weight = 5
 
 # footer menu
 [[footer]]
-name = "About"
+name = "ABOUT ME"
 url = "/about"
 weight = 1
 
 [[footer]]
-name = "Elements"
-url = "/elements"
+name = "PRIVACY"
+url = "/privacy"
 weight = 2
-
-[[footer]]
-name = "Privacy Policy"
-url = "/privacy-policy"
-weight = 3
