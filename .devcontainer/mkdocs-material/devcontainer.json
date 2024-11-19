@@ -1,0 +1,26 @@
+{
+    "name": "kubasejdak mkdocs-material:24.04",
+    "image": "kubasejdak/mkdocs-material:24.04",
+    "mounts": [
+        "source=${localEnv:HOME}/.gitconfig,target=/home/ubuntu/.gitconfig,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.gitconfig-private,target=/home/ubuntu/.gitconfig-private,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.ssh,target=/home/ubuntu/.ssh,type=bind,consistency=cached"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bierner.markdown-mermaid",
+                "github.copilot",
+                "github.vscode-github-actions",
+                "mads-hartmann.bash-ide-vscode",
+                "ms-vsliveshare.vsliveshare",
+                "redhat.vscode-yaml",
+                "waderyan.gitblame",
+                "yzhang.markdown-all-in-one"
+            ]
+        }
+    },
+    "runArgs": [
+        "--network=host"
+    ]
+}
