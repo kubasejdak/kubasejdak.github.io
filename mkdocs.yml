@@ -1,0 +1,56 @@
+site_name: kubasejdak.com
+site_url: https://kubasejdak.github.io
+site_description: Personal website of Kuba Sejdak
+
+theme:
+  name: material
+
+  palette:
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: green
+      accent: deep orange
+
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: green
+      accent: deep purple
+
+  features:
+    - navigation.footer
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/kubasejdak-org
+    - icon: simple/linkedin
+      link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
+
+copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
