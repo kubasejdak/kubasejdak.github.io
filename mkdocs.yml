@@ -4,7 +4,6 @@ site_description: Personal website of Kuba Sejdak
 
 theme:
   name: material
-
   palette:
     # Light Mode
     - scheme: default
@@ -13,7 +12,6 @@ theme:
         name: Light mode
       primary: green
       accent: deep orange
-
     # Dark Mode
     - scheme: slate
       toggle:
@@ -21,9 +19,12 @@ theme:
         name: Dark mode
       primary: green
       accent: deep purple
-
   features:
     - navigation.footer
+    - navigation.top
+
+plugins:
+  - blog
 
 markdown_extensions:
   - admonition
