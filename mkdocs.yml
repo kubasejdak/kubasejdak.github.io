@@ -27,7 +27,7 @@ theme:
     - navigation.instant
     - navigation.instant.progress
     - navigation.top
-    # - toc.integrate
+    - toc.integrate
 
 plugins:
   - blog
@@ -61,7 +61,7 @@ extra:
     - icon: simple/linkedin
       link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
 
-extra_css:
-  - stylesheets/extra.css
+#extra_css:
+#  - stylesheets/extra.css
 
 copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
