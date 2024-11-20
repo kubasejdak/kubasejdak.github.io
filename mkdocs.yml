@@ -27,7 +27,7 @@ theme:
     - navigation.instant
     - navigation.instant.progress
     - navigation.top
-    - toc.integrate
+    - toc.follow
 
 plugins:
   - blog
