@@ -6,14 +6,16 @@ theme:
   name: material
   palette:
     # Light Mode
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
       toggle:
         icon: material/weather-night
         name: Light mode
       primary: green
       accent: deep orange
     # Dark Mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Dark mode
@@ -21,7 +23,11 @@ theme:
       accent: deep purple
   features:
     - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
     - navigation.top
+    # - toc.integrate
 
 plugins:
   - blog
@@ -53,5 +59,8 @@ extra:
       link: https://github.com/kubasejdak-org
     - icon: simple/linkedin
       link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
+
+extra_css:
+  - stylesheets/extra.css
 
 copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
