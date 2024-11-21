@@ -33,7 +33,8 @@ theme:
     - toc.integrate
 
 plugins:
-  - blog
+  - blog:
+      post_url_format: "{slug}"
   - tags:
       tags_file: tags.md
 
@@ -67,6 +68,8 @@ extra:
       link: https://github.com/kubasejdak-org
     - icon: simple/linkedin
       link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
+    - icon: simple/x
+      link: https://x.com/kubasejdak
 
 copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
 
