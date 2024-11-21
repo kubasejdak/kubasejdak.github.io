@@ -22,16 +22,20 @@ theme:
       primary: green
       accent: deep purple
   features:
+    - content.code.annotate
+    - content.code.copy
     - navigation.footer
-    - navigation.indexes
     - navigation.instant
     - navigation.instant.progress
     - navigation.tabs
     - navigation.top
     - toc.follow
+    - toc.integrate
 
 plugins:
   - blog
+  - tags:
+      tags_file: tags.md
 
 markdown_extensions:
   - admonition
@@ -54,6 +58,8 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+  - toc:
+      permalink: true
 
 extra:
   social:
@@ -63,3 +69,10 @@ extra:
       link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
 
 copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
+
+nav:
+  - HOME:
+      - index.md
+  - BLOG:
+      - blog/index.md
+  - TAGS: tags.md
