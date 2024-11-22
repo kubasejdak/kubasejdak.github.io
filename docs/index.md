@@ -2,40 +2,5 @@
 
 I like to drink :beers:
 
-```cpp title="dupa.cpp" linenums="1"
-class Dupa
-{
-public:
-    Dupa() = default
-};
-
-```
-
-``` mermaid
-classDiagram
-  Person <|-- Student
-  Person <|-- Professor
-  Person : +String name
-  Person : +String phoneNumber
-  Person : +String emailAddress
-  Person: +purchaseParkingPass()
-  Address "1" <-- "0..1" Person:lives at
-  class Student{
-    +int studentNumber
-    +int averageMark
-    +isEligibleToEnrol()
-    +getSeminarsTaken()
-  }
-  class Professor{
-    +int salary
-  }
-  class Address{
-    +String street
-    +String city
-    +String state
-    +int postalCode
-    +String country
-    -validate()
-    +outputAsLabel()  
-  }
-```
+![Languages Activity](https://wakatime.com/share/@0424aa57-704b-40a7-be5b-23086e2abd72/addecce3-968e-49db-94e8-216675e40348.svg)
+![Coding Activity](https://wakatime.com/share/@0424aa57-704b-40a7-be5b-23086e2abd72/dd602182-0f3c-4ba0-ab9f-b851dc7ef611.svg)
