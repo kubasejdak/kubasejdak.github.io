@@ -12,14 +12,14 @@ From time to time there is a need to write a function, that accepts an unspecifi
 multiple ways of handling this depending on the context, use case and available language features. But the oldest and
 still most commonly used mechanism is the `va_arg`.
 
-You think nothing can surprise you? Let’s bet
+You think nothing can surprise you? Let’s bet.
 
 <!-- more -->
 
 ???+ abstract "In this series"
 
     1. **Variadic functions – Part 1: va_args and friends**
-    2. [Variadic functions – Part 2: C++11 variadic templates](/blog/variadic-templates)
+    2. [Variadic functions – Part 2: C++11 variadic templates](/blog/variadic-functions--part-2-c11-variadic-templates)
     3. [Variadic functions – Part 3: techniques of variadic templates](/blog/techniques-of-variadic-templates)
 
 ## `va_arg` in a nutshell
