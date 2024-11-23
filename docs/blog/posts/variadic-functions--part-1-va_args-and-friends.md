@@ -19,8 +19,8 @@ You think nothing can surprise you? Let’s bet.
 ???+ abstract "In this series"
 
     1. **Variadic functions – Part 1: va_args and friends**
-    2. [Variadic functions – Part 2: C++11 variadic templates](/blog/variadic-functions--part-2-c11-variadic-templates)
-    3. [Variadic functions – Part 3: techniques of variadic templates](/blog/techniques-of-variadic-templates)
+    2. [Variadic functions – Part 2: C++11 variadic templates](variadic-functions--part-2-c11-variadic-templates.md)
+    3. [Variadic functions – Part 3: techniques of variadic templates](variadic-functions--part-3-techniques-of-variadic-templates.md)
 
 ## `va_arg` in a nutshell
 

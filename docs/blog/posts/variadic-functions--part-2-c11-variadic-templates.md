@@ -19,9 +19,9 @@ out.
 
 ???+ abstract "In this series"
 
-    1. [Variadic functions – Part 1: va_args and friends](/blog/variadic-functions--part-1-va_args-and-friends)
+    1. [Variadic functions – Part 1: va_args and friends](variadic-functions--part-1-va_args-and-friends.md)
     2. **Variadic functions – Part 2: C++11 variadic templates**
-    3. [Variadic functions – Part 3: techniques of variadic templates](/blog/techniques-of-variadic-templates)
+    3. [Variadic functions – Part 3: techniques of variadic templates](variadic-functions--part-3-techniques-of-variadic-templates.md)
 
 ## Syntax & definitions
 
@@ -92,11 +92,11 @@ When compiler sees an ellipsis in the template it automatically expands the expr
 comma-separated list according to the context. In our example we have three different places where `...` is used. Let’s
 see in pseudo-code how compiler might unpack them:
 
-| CONTEXT                 | EXPANSION                                                         |
-| ----------------------- | ----------------------------------------------------------------- |
-| Template parameter pack | `typename... Args -> Arg1, Arg2, Arg3, ..., ArgN`                 |
-| Function parameter pack | `Args... args -> Arg1 arg1, Arg2 arg3, Arg3 arg3, ..., ArgN argN` |
-| Pack expansion          | `sum(args...) -> sum(arg1, arg2, arg3, ..., argN)`                |
+| CONTEXT                 | EXPANSION                                                           |
+| ----------------------- | ------------------------------------------------------------------- |
+| Template parameter pack | `typename... Args` -> `Arg1, Arg2, Arg3, ..., ArgN`                 |
+| Function parameter pack | `Args... args` -> `Arg1 arg1, Arg2 arg3, Arg3 arg3, ..., ArgN argN` |
+| Pack expansion          | `sum(args...)` -> `sum(arg1, arg2, arg3, ..., argN)`                |
 
 !!! Note
 
@@ -145,7 +145,8 @@ from the template parameter pack there is a well-defined `operator+()`.
 
 !!! Note
 
-    One possible way of ensuring this is to use the [concepts](https://en.cppreference.com/w/cpp/language/constraints) from C++20 aka [named requirements](https://en.cppreference.com/w/cpp/named_req).
+    One possible way of ensuring this is to use the [concepts](https://en.cppreference.com/w/cpp/language/constraints)
+    from C++20 aka [named requirements](https://en.cppreference.com/w/cpp/named_req).
 
 ## Instantiating template with list of different types
 
