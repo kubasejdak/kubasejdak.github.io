@@ -74,7 +74,8 @@ extra:
 copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
 
 nav:
-  - HOME: index.md
+  - HOME:
+      - kubasejdak.com: index.md
   - BLOG:
       - blog/index.md
   - PROJECTS: https://github.com/kubasejdak-org
