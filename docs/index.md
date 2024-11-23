@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # kubasejdak.com
 
 I like to drink :beers:
