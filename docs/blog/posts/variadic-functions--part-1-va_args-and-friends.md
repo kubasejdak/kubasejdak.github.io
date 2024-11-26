@@ -4,6 +4,7 @@ categories:
   - C++
 authors:
   - kuba
+comments: true
 ---
 
 # Variadic functions – Part 1: `va_args` and friends

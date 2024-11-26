@@ -4,6 +4,7 @@ categories:
   - Personal
 authors:
   - kuba
+comments: true
 ---
 
 # Let the games begin
