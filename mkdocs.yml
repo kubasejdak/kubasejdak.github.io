@@ -24,6 +24,7 @@ theme:
   features:
     - content.code.annotate
     - content.code.copy
+    - content.tabs.link
     - navigation.footer
     - navigation.instant
     - navigation.instant.progress
@@ -47,6 +48,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - footnotes
+  - md_in_html
   - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
@@ -79,8 +81,7 @@ extra:
 copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
 
 nav:
-  - HOME:
-      - kubasejdak.com: index.md
+  - HOME: index.md
   - BLOG:
       - blog/index.md
   - PROJECTS: https://github.com/kubasejdak-org
