@@ -32,6 +32,7 @@ theme:
     - navigation.top
     - toc.follow
     - toc.integrate
+  custom_dir: overrides
 
 plugins:
   - blog:
