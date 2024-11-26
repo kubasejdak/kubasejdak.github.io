@@ -4,6 +4,7 @@ categories:
   - C++
 authors:
   - kuba
+comments: true
 ---
 
 # Variadic functions – Part 3: Techniques of variadic templates
