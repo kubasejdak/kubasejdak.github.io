@@ -40,6 +40,12 @@ theme:
 plugins:
   - blog:
       post_url_format: "{slug}"
+  - redirects:
+      redirect_maps:
+        "let-the-games-begin.md": "blog/posts/let-the-games-begin.md"
+        "variadic-functions-va-args.md": "blog/posts/variadic-functions--part-1-va_args-and-friends.md"
+        "variadic-templates.md": "blog/posts/variadic-functions--part-2-c11-variadic-templates.md"
+        "techniques-of-variadic-templates.md": "blog/posts/variadic-functions--part-3-techniques-of-variadic-templates.md"
   - rss:
       match_path: "blog/posts/.*"
       date_from_meta:
