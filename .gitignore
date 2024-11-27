@@ -4,3 +4,7 @@ venv
 
 # Build directories
 site
+
+# Python binaries
+*.pyc
+__pycache__

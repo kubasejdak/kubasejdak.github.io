@@ -30,6 +30,9 @@ theme:
     - navigation.instant.progress
     - navigation.tabs
     - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
     - toc.follow
     - toc.integrate
   custom_dir: overrides
@@ -42,6 +45,7 @@ plugins:
       date_from_meta:
         as_creation: date.created
         as_update: date.updated
+  - search
   - tags:
       tags_file: tags.md
 
@@ -67,7 +71,10 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - toc:
+      toc_depth: 2
       permalink: true
 
 extra:
@@ -79,7 +86,8 @@ extra:
     - icon: simple/x
       link: https://x.com/kubasejdak
 
-copyright: Copyright &copy; 2024 - 2024 Kuba Sejdak
+hooks:
+  - hooks/hooks.py
 
 nav:
   - HOME:
