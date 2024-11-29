@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Configure Git Credentials
         run: |
+          git
           pwd
           ls -al
           git config user.name github-actions[bot]
