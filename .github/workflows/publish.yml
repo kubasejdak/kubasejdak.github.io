@@ -17,9 +17,5 @@ jobs:
       options: --user root
     steps:
       - uses: actions/checkout@v4
-      - name: Setup GitHub Actions bot
-        run: |
-          git config --global --add safe.directory '*'
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-      - run: mkdocs gh-deploy --force
+      - name: mkdocs publish
+        uses: kubasejdak-org/mkdocs-publish-action@main
