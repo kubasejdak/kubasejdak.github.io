@@ -19,7 +19,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Configure Git Credentials
         run: |
-          git config --global --add safe.directory "*"
+          git config --global --add safe.directory '*'
+          pip install six
           git status
           pwd
           ls -al
