@@ -54,6 +54,7 @@ plugins:
         as_creation: date.created
         as_update: date.updated
   - search
+  - social
   - tags:
       tags_file: tags.md
 

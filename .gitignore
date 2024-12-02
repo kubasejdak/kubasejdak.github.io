@@ -4,6 +4,7 @@ venv
 
 # Build directories
 site
+.cache
 
 # Python binaries
 *.pyc
