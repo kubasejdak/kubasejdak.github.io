@@ -218,7 +218,7 @@ hidden:
 
 === ":octicons-file-code-16: `CMakeLists.txt` for library A"
 
-    ```cmake
+    ```cmake linenums="1"
     add_library(A <LIBRARY_A_SOURCES>)
 
     target_include_directories(
@@ -228,7 +228,7 @@ hidden:
 
 === ":octicons-file-code-16: `CMakeLists.txt` for library B"
 
-    ```cmake
+    ```cmake linenums="1"
     add_library(B <LIBRARY_B_SOURCES>)
 
     target_link_libraries(B
@@ -252,7 +252,7 @@ allows that with the following functions:
 
 === ":octicons-file-code-16: `CMakeLists.txt` for library A"
 
-    ```cmake
+    ```cmake linenums="1"
     add_library(A <LIBRARY_A_SOURCES>)
 
     target_compile_definitions(
@@ -270,7 +270,7 @@ allows that with the following functions:
 
 === ":octicons-file-code-16: `CMakeLists.txt` for library B"
 
-    ```cmake
+    ```cmake linenums="1"
     add_library(B <LIBRARY_B_SOURCES>)
 
     target_link_libraries(B
@@ -333,7 +333,7 @@ directory).
 CMake offers basic file manipulation functions, just like in the system console. Below you can find an extract from the
 [official CMake file commands documentation][cmake-file]:
 
-```
+``` linenums="1"
 Reading
   file(READ <filename> <out-var> [...])
   file(STRINGS <filename> <out-var> [...])
@@ -396,7 +396,7 @@ on their presence in the system. Each OS or even package can have a different de
 CMake has a built-in function to locate a predefined set of packages by name and automatically set variables with
 include paths, sources or even expose whole “modern” target which has it all set as properties:
 
-```cmake
+```cmake linenums="1"
 find_package(Boost 1.56 REQUIRED COMPONENTS date_time filesystem iostreams)
 
 add_executable(foo foo.cpp)
@@ -443,7 +443,7 @@ notation, where templates have the `.in` suffix):
 
 === ":octicons-file-code-16: `version.h.in`"
 
-    ```cpp
+    ```cpp linenums="1"
     #pragma once 
 
     static const char* cVersion = "@MY_VERSION@"; 
@@ -451,7 +451,7 @@ notation, where templates have the `.in` suffix):
 
 === ":octicons-file-code-16: `CMakeLists.txt`"
 
-    ```cmake
+    ```cmake linenums="1"
     set(MY_VERSION "1.0.5b")
 
     configure_file(version.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
@@ -461,7 +461,7 @@ This configuration will produce after “generation” step the following file:
 
 === ":octicons-file-code-16: `version.h`"
 
-    ```cpp
+    ```cpp linenums="1"
     #pragma once 
 
     static const char* cVersion = "1.0.5b";
@@ -477,7 +477,7 @@ typically found in Doxygen config by setting CMake variables with the `DOXYGEN_`
 
 Here is an example:
 
-```cmake
+```cmake linenums="1"
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
     set(DOXYGEN_OUTPUT_DIRECTORY        ${CMAKE_BINARY_DIR}/docs) 
@@ -502,7 +502,7 @@ file extension.
 
 Here is an example of an executable built from both C and C++ files. They are all defined as one list of sources:
 
-```cmake
+```cmake linenums="1"
 cmake_minimum_required(VERSION 3.15)
 
 project(test LANGUAGES C CXX)
