@@ -2,6 +2,8 @@
 date: 2019-12-09
 categories:
   - Tools
+tags:
+  - CMake
 authors:
   - kuba
 comments: true
@@ -238,7 +240,311 @@ hidden:
 
     `PUBLIC`, `PRIVATE` and `INTERFACE` specifiers are explained in [this][modern-cmake] article.
 
+## 7. CMake makes it easy to handle compilation, linking and preprocessor flags
+
+This paragraph is similar to the previous one. All the problems with the include paths are valid also for compilation,
+linking and preprocessor flags. And we also want other libraries to provide all necessary flags to use them. CMake
+allows that with the following functions:
+
+- `target_compile_definitions(<PREPROCESSOR_FLAGS>)`,
+- `target_compile_options(<COMPILATION_FLAGS>)`,
+- `target_link_options(<LINKER_FLAGS>)`.
+
+=== ":octicons-file-code-16: `CMakeLists.txt` for library A"
+
+    ```cmake
+    add_library(A <LIBRARY_A_SOURCES>)
+
+    target_compile_definitions(
+        PUBLIC -DUSE_TIMER -DNO_EXCEPTIONS
+    )
+
+    target_compile_options(
+        PUBLIC —std=c++17
+    )
+
+    target_link_options(
+        PUBLIC -T linker_script.ld
+    )
+    ```
+
+=== ":octicons-file-code-16: `CMakeLists.txt` for library B"
+
+    ```cmake
+    add_library(B <LIBRARY_B_SOURCES>)
+
+    target_link_libraries(B
+        PRIVATE A             # Here we automatically get the -DUSE_TIMER -DNO_EXCEPTIONS —std=c++17 -T linker_script.ld flags.
+    )
+    ```
+
+## 8. CMake is supported by all major C++ package managers
+
+There are 3 major package managers for C++:
+
+- [Conan][conan],
+- [vcpkg][vcpkg],
+- [Hunter][hunter].
+
+All of them have built-in native support for CMake. This article is already too long to show examples for each manager,
+so you have to trust me on this. Each of them is easy to use and doesn’t make a mess in your carefully crafted
+`CMakeLists.txt` files.
+
+## 9. CMake is backward compatible
+
+CMake is an actively developed project and new versions are released quite often. Some of them add new features and some
+slightly modify existing ones. Within the development team, people may be using different operating systems and
+different versions of that systems. It is very likely that there will be at least few different versions of CMake in use
+among project members. This could get messy if someone uses feature that is not available for everyone. Also bugs in
+CMake may be different for everyone.
+
+In order to tame the chaos CMake introduced policies, which strictly define how particular CMake feature should behave.
+Every CMake version has a set of its default policies and is able to load those sets for every previous version. So for
+example despite having CMake 3.15 we can enforce the binary to behave like version 3.7.
+
+We can do that by specifying the following statement:
+
+```cmake
+cmake_minimum_required(VERSION <CMAKE_VERSION_TO_BE_USED>)
+```
+
+It is mandatory to set CMake version in the at the beginning of the root `CMakeLists.txt`, but we can change that later
+in any place (however I strongly advice against that!).
+
+## 10. CMake is supported by many IDEs
+By this I mean, that many IDEs can use existing CMakeLists.txt directly as a project file. All you have to do is point
+to the root CMakeLists.txt.
+
+Here is a list of the most popular ones:
+
+- [CLion][clion],
+- [Visual Studio Code][vscode],
+- [QtCreator][qtcreator],
+- [Visual Studio][vs],
+- [NetBeans][netbeans],
+- [KDevelop][kdevelop].
+
+## 11. CMake allows basic file manipulation
+
+Sometimes during configure or build time we need to interact with our filesystem. It usually is a simple operation like
+reading contents of the file (e.g. containing compilation flags) or copying (e.g. from resource directory to the build
+directory).
+
+CMake offers basic file manipulation functions, just like in the system console. Below you can find an extract from the
+[official CMake file commands documentation][cmake-file]:
+
+```
+Reading
+  file(READ <filename> <out-var> [...])
+  file(STRINGS <filename> <out-var> [...])
+  file(<HASH> <filename> <out-var>)
+  file(TIMESTAMP <filename> <out-var> [...])
+  file(GET_RUNTIME_DEPENDENCIES [...])
+
+Writing
+  file({WRITE | APPEND} <filename> <content>...)
+  file({TOUCH | TOUCH_NOCREATE} [<file>...])
+  file(GENERATE OUTPUT <output-file> [...])
+
+Filesystem
+  file({GLOB | GLOB_RECURSE} <out-var> [...] [<globbing-expr>...])
+  file(RENAME <oldname> <newname>)
+  file({REMOVE | REMOVE_RECURSE } [<files>...])
+  file(MAKE_DIRECTORY [<dir>...])
+  file({COPY | INSTALL} <file>... DESTINATION <dir> [...])
+  file(SIZE <filename> <out-var>)
+  file(READ_SYMLINK <linkname> <out-var>)
+  file(CREATE_LINK <original> <linkname> [...])
+
+Path Conversion
+  file(RELATIVE_PATH <out-var> <directory> <file>)
+  file({TO_CMAKE_PATH | TO_NATIVE_PATH} <path> <out-var>)
+
+Transfer
+  file(DOWNLOAD <url> <file> [...])
+  file(UPLOAD <file> <url> [...])
+
+Locking
+  file(LOCK <path> [...])
+```
+
+All of of this in a cross-platform manner.
+
+## 12. CMake offers similar functionality as system shell
+
+Most of the operations that you would like to perform on variables in Bash or any other shell along with basic flow
+control and code organization can be done in CMake as well. We are talking here about:
+
+- setting/getting value of the variable,
+- loops,
+- functions and macros,
+- lists manipulation,
+- conditional branches (`if`/`else if`/`else`),
+- setting/unsetting environmental variables,
+- and much more.
+
+## 13. CMake can be launched with GUI
+
+Yes, CMake comes with a full-featured GUI (however it may require installation of an additional package). Consult the
+[official CMake GUI docs][cmake-gui].
+
+## 14. CMake has ability to locate installed libraries in the system
+
+Dependency management can be really painful when it comes to handling external libraries. Especially, if we have to rely
+on their presence in the system. Each OS or even package can have a different default installation path.
+
+CMake has a built-in function to locate a predefined set of packages by name and automatically set variables with
+include paths, sources or even expose whole “modern” target which has it all set as properties:
+
+```cmake
+find_package(Boost 1.56 REQUIRED COMPONENTS date_time filesystem iostreams)
+
+add_executable(foo foo.cpp)
+
+target_link_libraries(foo PRIVATE Boost::date_time Boost::filesystem Boost::iostreams)
+```
+
+The list of supported libraries is too long (as of CMake 3.16) to put it here, but feel free to check it in the
+[official docs][cmake-modules].
+
+!!! note
+
+    You can also specify an additional location with your own packages finder files.
+
+## 15. CMake allows creating static, shared and header-only libraries
+
+You can explicitly tell CMake to create a static (default) or shared library by adding an extra parameter to
+`add_library`:
+
+```cmake
+add_library(<NAME> [SHARED | STATIC] <SOURCES>)
+```
+
+Header-only libraries are a bit less obvious to create, but still quite easy. All you need to do is to:
+
+- specify that given library is an interface (no binary is produced): `add_library(<NAME> INTERFACE)`,
+- set its interface include path to the location of your headers: `target_include_directories(<NAME> INTERFACE .)`.
+
+## 16. CMake allows code/files generation
+
+Sometimes we want to add some compile-time information to our sources, that will be automatically computed or generated.
+An excellent example would be a string with the project version.
+
+One way of having that would be to change manually this value directly in the header. And it is OK. But what if this
+value has to be used in multiple contexts, some of which are not inside the source code? For example in documentation,
+in some build artifact etc. You may also want to extract this value from git tag. What then?
+
+Fortunately CMake has a generic way of creating new files from a predefined template. All you need to do is to create a
+file that you want to be generated and replace all its “variable” parts with the CMake variable notation.
+
+Then you can call `configure_file()` command and CMake will create a copy of that template and replace all “variable”
+parts with the corresponding values, known at that time. Here is an example with version string (there is a common
+notation, where templates have the `.in` suffix):
+
+=== ":octicons-file-code-16: `version.h.in`"
+
+    ```cpp
+    #pragma once 
+
+    static const char* cVersion = "@MY_VERSION@"; 
+    ```
+
+=== ":octicons-file-code-16: `CMakeLists.txt`"
+
+    ```cmake
+    set(MY_VERSION "1.0.5b")
+
+    configure_file(version.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
+    ```
+
+This configuration will produce after “generation” step the following file:
+
+=== ":octicons-file-code-16: `version.h`"
+
+    ```cpp
+    #pragma once 
+
+    static const char* cVersion = "1.0.5b";
+    ```
+
+## 17. CMake allows generation of Doxygen docs without the hardcoded config
+
+For some people it would be beneficial to be able to modify Doxygen configuration at build time or even completely
+remove it.
+
+CMake has a built-in function, that can add a Doxygen generation target to you build. You can also modify all settings
+typically found in Doxygen config by setting CMake variables with the `DOXYGEN_` prefix.
+
+Here is an example:
+
+```cmake
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+    set(DOXYGEN_OUTPUT_DIRECTORY        ${CMAKE_BINARY_DIR}/docs) 
+    set(DOXYGEN_GENERATE_LATEX          NO)
+    set(DOXYGEN_EXTRACT_PRIVATE         YES)
+    set(DOXYGEN_EXTRACT_PACKAGE         YES)
+    set(DOXYGEN_EXTRACT_STATIC          YES)
+    set(DOXYGEN_WARN_NO_PARAMDOC        YES)
+    set(DOXYGEN_HTML_OUTPUT             .)
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE  README.md)
+    set(DOXYGEN_FILE_PATTERNS           *.c *.cc *.cxx *.cpp *.c++ *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.inc README.md)
+
+    doxygen_add_docs(doxygen . WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+endif ()
+```
+
+## 18. CMake automatically detects required compiler for the given file
+
+You don’t have to create a separate source lists for different compilers (e.g. one for C, one for C++, one for ASM).
+Once you enable given language in the `project()` command CMake will automatically use the correct tool basing on the
+file extension.
+
+Here is an example of an executable built from both C and C++ files. They are all defined as one list of sources:
+
+```cmake
+cmake_minimum_required(VERSION 3.15)
+
+project(test LANGUAGES C CXX)
+
+add_executable(testExec main.cpp moduleA.c moduleB.cpp)
+```
+
+## 19. CMake can create dependency graph
+
+Software architects or technical leaders may be really interested in the dependencies between the project modules and
+their nature (`PUBLIC`, `INTERFACE`, `PRIVATE`). CMake can help visualize that in a form of a `dot` graph, which can be
+later converted into an image.
+
+All you need to is to pass `—-graphviz=<name>.dot` parameter to the CMake command line and it will generate it in the
+build directory with the given name:
+
+```bash
+cmake <PATH_TO_SOURCES> --graphviz=graph/test.dot
+```
+
+Here is an example graph (`graph/test.dot`):
+
+![Graphviz example](../../assets/graphviz_example.png)
+
+## Summary
+
+CMake is a powerful tool. It may have been hard to use in the past, but now with a bit of a good will it can really
+empower you in managing even most complicated build systems. Give it a try and I know you won’t regret it.
+
 <!-- Links -->
 
 [cmake-docs]: https://cmake.org/cmake/help/latest/index.html
 [modern-cmake]: modern-cmake-is-like-inheritance.md
+[conan]: https://conan.io/
+[vcpkg]: https://github.com/microsoft/vcpkg
+[hunter]: https://hunter.readthedocs.io/en/latest/
+[clion]: https://www.jetbrains.com/clion/
+[vscode]: https://code.visualstudio.com/
+[qtcreator]: https://www.qt.io/download
+[vs]: https://visualstudio.microsoft.com/
+[netbeans]: https://netbeans.apache.org/
+[kdevelop]: https://kdevelop.org/
+[cmake-file]: https://cmake.org/cmake/help/latest/command/file.html
+[cmake-gui]: https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html
+[cmake-modules]: https://cmake.org/cmake/help/latest/manual/cmake-modules.7.html#find-modules
