@@ -108,6 +108,17 @@ CMake:
 | `set(CMAKE_CXX_FLAGS <compilation_flags>)` | `target_compile_options(<target> [VISIBILITY] <compilation_flags>)`      |
 | `set(CMAKE_LINKER_FLAGS <linker_flags>)`   | `target_link_options(<target> [VISIBILITY] <linker_flags>)`              |
 
+!!! note
+
+    I personally prefer to indent each entry after `[VISIBILITY]` and put each one on a separate line like this:
+    ```cmake
+    target_include_directories(<target>
+        [VISIBILITY]
+            <include_path1>
+            <include_path2>
+    )
+    ```
+
 Modern CMake introduced also new keywords, that specify visibility of the given target property: `PRIVATE`, `PUBLIC`,
 `INTERFACE`. Their meanings are as follows:
 
@@ -121,9 +132,18 @@ visibility level:
 
 ```cmake linenums="1"
 target_include_directories(<target>
-    INTERFACE <include_path_1> <include_path_2> <include_path_3>
-    PUBLIC <include_path_4> <include_path_5> <include_path_6>
-    PRIVATE <include_path_7> <include_path_8> <include_path_9>
+    INTERFACE
+        <include_path_1>
+        <include_path_2>
+        <include_path_3>
+    PUBLIC
+        <include_path_4>
+        <include_path_5>
+        <include_path_6>
+    PRIVATE
+        <include_path_7>
+        <include_path_8>
+        <include_path_9>
 )
 ```
 
@@ -166,7 +186,7 @@ In order to understand it better, let’s see some use cases.
 
 ## Example 1: avoiding header dependencies
 
-Example 1: avoiding header dependencies
+Let’s assume the following directory structure:
 
 ```linenums="1"
 libA/
@@ -200,37 +220,193 @@ main.cpp
 
 and the following include dependencies in code:
 
-=== ":octicons-file-code-16: `sourceB.cpp`"
+```cpp linenums="1"
+// sourceB.cpp
 
-    ```cpp linenums="1"
-    #include "libC/sourceC.h"
-    #include "submodule.h"
+#include "libC/sourceC.h"
+#include "submodule.h"
 
-    // ...
-    ```
+// ...
+```
 
-=== ":octicons-file-code-16: `sourceA.h`"
+```cpp linenums="1"
+// sourceA.h
 
-    ```cpp linenums="1"
-    #include "libB/sourceB.h"
+#include "libB/sourceB.h"
 
-    // ...
-    ```
+// ...
+```
 
-=== ":octicons-file-code-16: `main.cpp`"
+```cpp linenums="1"
+// main.cpp
 
-    ```cpp linenums="1"
-    #include "libA/sourceA.h"
-    #include "libC/sourceC.h"
+#include "libA/sourceA.h"
+#include "libC/sourceC.h"
 
-    // ...
-    ```
+// ...
+```
 
 Also let’s define a rule, that we don't want any library to be able to use "private" headers of the other libraries:
 e.g. the code below shouldn’t compile:
 
-=== ":octicons-file-code-16: `main.cpp`"
+```cpp linenums="1"
+// main.cpp
 
-    ```cpp linenums="1"
-    #include "privateHeaderC2.h" // should fail as "no such file or directory"
-    ```
+#include "privateHeaderC2.h" // should fail as "no such file or directory"
+```
+
+This restriction is a good architectural practice, that can keep the code clean from unwanted dependencies. How to make
+that compile without a messy config?
+
+First we have to check each target and determine the include paths that it is “creating”. By this I mean which include
+paths belong to this particular target. Then for each path in a given target we have to decide, if it should be
+accessible by others (`PUBLIC`) or not (`PRIVATE`). Finally we will use new target-oriented commands to set the include
+properties for each library.
+
+```cmake linenums="1"
+add_executable(myExecutable
+    main.cpp
+)
+```
+
+```cmake linenums="1"
+add_library(libA
+    sourceA.cpp
+)
+target_include_directories(libA
+    PUBLIC
+        include
+)
+```
+
+```cmake linenums="1"
+add_library(libB
+    sourceB.cpp
+    submodule/submodule.cpp
+)
+
+target_include_directories(libB
+    PUBLIC
+        include
+    PRIVATE
+        submodule
+)
+```
+
+```cmake linenums="1"
+add_library(libC
+    sourceC.cpp
+)
+
+target_include_directories(libC
+    PUBLIC
+        include
+)
+```
+
+All these targets have one thing in common: the only `PUBLIC` include path is the `include` directory. This means, that
+if other libraries call only `target_link_libraries()` to both get include paths and link with library, then no private
+header will ever leak unintentionally outside the containing library.
+
+Now its time to properly link the libraries:
+
+```cmake linenums="1"
+target_link_libraries(myExecutable
+    PRIVATE
+        libA
+        libC
+)
+
+target_link_libraries(libA
+    PUBLIC
+        libB
+)
+
+target_link_libraries(libB
+    PRIVATE
+        libC
+)
+```
+
+Observe the following things:
+
+1. Executable doesn’t need to specify linking type (because nothing can link with exec), but we define it for
+consistency.
+2. `libA` links publicly with `libB`, because it is using header from `libB` in its own public header. So it has to
+provide this path to its clients.
+3. `libB` links privately with `libC`, because it is using header from `libC` only in its internal implementation and
+its clients shouldn’t even be aware of this.
+4. `target_link_libraries()` means in Modern CMake two things: use library (get its properties) at compilation stage and
+link with it at linking stage. Hence maybe a bit better name for it would be `target_use_libraries()` but it would break
+the backward compatibility.
+
+## Example 2: defining header-only libraries
+
+Sometimes we have to deal with libraries, that don’t produce any binaries. For example, they are just a set of headers
+that your application needs to include. In such a case they are called a header-only libraries.
+
+An excellent example would be the [Catch2][catch2] library, which implements the popular C++ testing framework. It
+consists of only one file `catch.hpp` which is stored in `catch2` directory. First, it would be convenient for us, to
+still have a CMake target that provides path to that file once someone links with it. Secondly, Catch2 allows some
+behavior customization via the define directives. For example, we can disable usage of POSIX signals and exceptions in
+favor of a call to `std::terminate()`. This is particularly crucial on embedded systems, where we can’t use any of them.
+So our target should also be able to detect the environment and provide the proper defines accordingly.
+
+In Modern CMake it could be expressed like this:
+
+```cmake linenums="1"
+add_library(catch2 INTERFACE)
+
+target_include_directories(catch2
+    INTERFACE
+        catch2
+)
+
+if (<some_condition_to_detect_embedded_platform>)
+    target_compile_definitions(catch2
+        INTERFACE
+            CATCH_CONFIG_NO_POSIX_SIGNALS
+            CATCH_CONFIG_DISABLE_EXCEPTIONS
+    )
+endif ()
+```
+
+Note the usage of `INTERFACE` keyword. When `add_library()` contains the `INTERFACE` specifier, then it tells CMake,
+that this target doesn’t produce any binary. In such a case it doesn’t contain any source files.
+
+As mentioned before, all properties of the `INTERFACE` target also have to be marked as `INTERFACE`. This is
+understandable, because header-only libraries don’t have any private implementation. Everything is always accessible to
+the client. If this is still confusing for you then just remember, that `INTERFACE` target enforces `INTERFACE`
+properties. But later linking with such a target can be of any type:
+
+```cmake linenums="1"
+add_library(myTestingModule
+    source.cpp
+)
+
+target_link_libraries(myTestingModule
+    PRIVATE
+        catch2
+)
+```
+
+## Summary
+
+CMake provides a new target-oriented way of specifying various compiler options and other properties. Once you link with
+a target, you immediately inherit (obtain) its `INTERFACE` and `PUBLIC` properties and make it your own with the access
+level specified in the linking command. This mechanism resembles C++ inheritance, thus should be easy to understand.
+
+!!! success "If you are using CMake 3.x and above, then use the this rule as your guide for creating targets:"
+
+    Library designed and built with Modern CMake should provide its clients with everything they need to compile and use
+    it, without the need to check its internal implementation.
+
+If you find yourself checking what is the path to the missing include in some library then it means that you are doing
+something wrong:
+
+- either CMake configuration of that library is bad,
+- or you are trying to access files that are explicitly hidden from you.
+
+<!-- LINKS -->
+
+[catch2]: https://github.com/catchorg/Catch2
