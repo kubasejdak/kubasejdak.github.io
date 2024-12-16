@@ -17,8 +17,8 @@ many codebases.
 
 ???+ abstract "In this series"
 
-    1. [Variadic functions – Part 1: va_args and friends](variadic-functions--part-1-va_args-and-friends.md)
-    2. [Variadic functions – Part 2: C++11 variadic templates](variadic-functions--part-2-c11-variadic-templates.md)
+    1. [Variadic functions – Part 1: va_args and friends][part1]
+    2. [Variadic functions – Part 2: C++11 variadic templates][part2]
     3. **Variadic functions – Part 3: techniques of variadic templates**
 
 ## Recursive variadic templates
@@ -155,12 +155,12 @@ of most interesting use cases for the expression expansion:
 | Function arguments  | `f(sizeof(args)...)` -> `f(sizeof(arg1), sizeof(arg2), ..., sizeof(argN)`                                                                                                          |
 | Template arguments  | `print<Param1, Args..., Param2>` -> `print<Param1, Arg1, Arg2, ..., ArgN, Param2>`                                                                                                 |
 | Inheritance list    | `template class Derived : public Bases... {}` -> `template <typename Base1, typename Base2, ..., typename BaseN> class Derived : public Base1, public Base2, ..., public BaseN {}` |
-| Lambda capture list | `[args...]() {}` -> `[arg1, arg2, ..., argN]() {}`                                                                                                                                 |
+| Lambda capture list | `[args...] {}` -> `[arg1, arg2, ..., argN] {}`                                                                                                                                     |
 
 ## C++17 fold expressions
 
 C++17 added even more operations, that can be used with the parameter pack. The main idea is to allow using two-argument
-operators. [C++17 standard](http://eel.is/c++draft/expr.prim.fold) specifies 4 acceptable syntax variations for this:
+operators. [C++17 standard][cpp-standard-fold] specifies 4 acceptable syntax variations for this:
 
 1. unary right fold (`pack op ...`),
 2. unary left fold (`... op pack`),
@@ -254,10 +254,18 @@ Some of the most popular standard functions and classes that use perfect forward
 
     Even Bjarne Stroustrup was joking (or not), that he can’t write perfect forwarding with confidence without checking
     some details first. Not to mention how little percentage of programmers actually should care about understanding it.
-    Herb Sutter mentions this in his ["Back to the Basics! Essentials of Modern C++ Style"](https://youtu.be/xnqTKD8uD64?list=PLHTh1InhhwT7esTl1bRitiizeEnksGU7J&t=4667)
-    talk at CppCon 2014 (direct link to the quote).
+    Herb Sutter mentions this in his ["Back to the Basics! Essentials of Modern C++ Style"][cppcon-herb] talk at CppCon
+    2014 (direct link to the quote).
 
 ## Summary
 
 I hope that now you know what can be done with variadic templates and how to start using it.
-[cppreference](https://en.cppreference.com/w/cpp/language/parameter_pack) can be a useful resource when in doubt.
+[cppreference][cppreference-param-pack] can be a useful resource when in doubt.
+
+<!-- links -->
+
+[part1]: variadic-functions--part-1-va_args-and-friends.md
+[part2]: variadic-functions--part-2-c11-variadic-templates.md
+[cpp-standard-fold]: http://eel.is/c++draft/expr.prim.fold
+[cppcon-herb]: https://youtu.be/xnqTKD8uD64?list=PLHTh1InhhwT7esTl1bRitiizeEnksGU7J&t=4667
+[cppreference-param-pack]: https://en.cppreference.com/w/cpp/language/parameter_pack

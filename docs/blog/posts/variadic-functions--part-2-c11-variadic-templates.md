@@ -20,9 +20,9 @@ out.
 
 ???+ abstract "In this series"
 
-    1. [Variadic functions – Part 1: va_args and friends](variadic-functions--part-1-va_args-and-friends.md)
+    1. [Variadic functions – Part 1: va_args and friends][part1]
     2. **Variadic functions – Part 2: C++11 variadic templates**
-    3. [Variadic functions – Part 3: techniques of variadic templates](variadic-functions--part-3-techniques-of-variadic-templates.md)
+    3. [Variadic functions – Part 3: techniques of variadic templates][part3]
 
 ## Syntax & definitions
 
@@ -78,10 +78,10 @@ args...
 
 which is called **pack expansion**.
 
-[Template parameter pack](https://en.cppreference.com/w/cpp/language/parameter_pack) defines a list of unspecified
-(possibly different) types that will be used to instantiate this template function. Function parameter pack is using the
-same list of types to create the function argument list. The notion of ellipsis in this context is similar to that known
-from the `va_args` functions. The difference and real strength of variadic templates comes in the argument expansion.
+[Template parameter pack][cppreference-param-pack] defines a list of unspecified (possibly different) types that will be
+used to instantiate this template function. Function parameter pack is using the same list of types to create the
+function argument list. The notion of ellipsis in this context is similar to that known from the `va_args` functions.
+The difference and real strength of variadic templates comes in the argument expansion.
 
 !!! Note
 
@@ -146,8 +146,8 @@ from the template parameter pack there is a well-defined `operator+()`.
 
 !!! Note
 
-    One possible way of ensuring this is to use the [concepts](https://en.cppreference.com/w/cpp/language/constraints)
-    from C++20 aka [named requirements](https://en.cppreference.com/w/cpp/named_req).
+    One possible way of ensuring this is to use the [concepts][cppreference-constraints] from C++20 aka
+    [named requirements][cppreference-named-req].
 
 ## Instantiating template with list of different types
 
@@ -239,7 +239,16 @@ Recursion is not the only technique used with variadic templates. Our toolbox co
 
 - expression expansion,
 - creative trick (read “hack”) with `std::initializer_list`,
-- [C++17 fold expressions](https://en.cppreference.com/w/cpp/language/fold),
+- [C++17 fold expressions][cppreference-fold],
 - `sizeof...` operator.
 
 But all of that will be covered in the next article. Stay tuned.
+
+<!-- links -->
+
+[part1]: variadic-functions--part-1-va_args-and-friends.md
+[part3]: variadic-functions--part-3-techniques-of-variadic-templates.md
+[cppreference-param-pack]: https://en.cppreference.com/w/cpp/language/parameter_pack
+[cppreference-constraints]: https://en.cppreference.com/w/cpp/language/constraints
+[cppreference-named-req]: https://en.cppreference.com/w/cpp/named_req
+[cppreference-fold]: https://en.cppreference.com/w/cpp/language/fold
