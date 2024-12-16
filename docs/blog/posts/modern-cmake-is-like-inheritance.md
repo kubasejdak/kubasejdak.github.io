@@ -407,6 +407,6 @@ something wrong:
 - either CMake configuration of that library is bad,
 - or you are trying to access files that are explicitly hidden from you.
 
-<!-- LINKS -->
+<!-- links -->
 
 [catch2]: https://github.com/catchorg/Catch2

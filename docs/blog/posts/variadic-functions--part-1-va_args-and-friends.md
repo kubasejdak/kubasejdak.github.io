@@ -20,13 +20,13 @@ You think nothing can surprise you? Let’s bet.
 ???+ abstract "In this series"
 
     1. **Variadic functions – Part 1: va_args and friends**
-    2. [Variadic functions – Part 2: C++11 variadic templates](variadic-functions--part-2-c11-variadic-templates.md)
-    3. [Variadic functions – Part 3: techniques of variadic templates](variadic-functions--part-3-techniques-of-variadic-templates.md)
+    2. [Variadic functions – Part 2: C++11 variadic templates][part2]
+    3. [Variadic functions – Part 3: techniques of variadic templates][part3]
 
 ## `va_arg` in a nutshell
 
-[Variadic function](https://en.cppreference.com/w/cpp/utility/variadic) by definition takes a variable number of
-arguments. C and C++ provide a builtin way of expressing this in the argument list by using the ellipsis (`...`).
+[Variadic function][cppreference-variadic] by definition takes a variable number of arguments. C and C++ provide a
+builtin way of expressing this in the argument list by using the ellipsis (`...`).
 
 Here is a function, that accepts two doubles and an unknown number of other arguments:
 
@@ -39,8 +39,7 @@ void compute(double a, double b, int count...)
 
 In the example we provide an additional information to the function – number of arguments that are hidden behind the
 trailing ellipsis. It looks like an optional hint to the function implementer, but in fact it is required by the [C
-standard](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2346.pdf) ([C++ refers](http://eel.is/c++draft/cstdarg.syn)
-to C on this matter).
+standard][c-standard] ([C++ refers][cpp-cstdarg] to C on this matter).
 
 Valid usage of `va_args` in C++ requires that:
 
@@ -52,8 +51,8 @@ Valid usage of `va_args` in C++ requires that:
 
     C++ added an optional comma before the ellipsis to be compatible with C, where comma is obligatory.
 
-The standard library provides the [<cstdarg>](https://en.cppreference.com/w/cpp/header/cstdarg) header with the
-following tools to work with the variadic arguments:
+The standard library provides the [<cstdarg>][cppreference-cstdarg] header with the following tools to work with the
+variadic arguments:
 
 - `va_list` – helper type, that represents the variadic arguments list,
 - `va_start()` – initializes the `va_list` object in the current function,
@@ -69,8 +68,8 @@ callee).
 
     Here are two example implementations found in the wild:
 
-    – pointer to the stack ([old Apple kernel implementation](https://opensource.apple.com/source/xnu/xnu-792.13.8/EXTERNAL_HEADERS/stdarg.h)),<br>
-    – custom structure ([System V AMD64 ABI specification](https://software.intel.com/sites/default/files/article/402129/mpx-linux64-abi.pdf)).
+    – pointer to the stack ([old Apple kernel implementation][apple-kernel]),<br>
+    – custom structure ([System V AMD64 ABI specification][systemv-spec]).
 
 `va_start()` macro initializes the `va_list` object using the number of expected variadic arguments. It is required to
 be called before any access to the variable arguments.
@@ -108,8 +107,7 @@ int main()
 }
 ```
 
-Feel free to play and inspect this example on different platforms and compilers using [Compiler
-Explorer](https://godbolt.org/z/nD5OAZ).
+Feel free to play and inspect this example on different platforms and compilers using [Compiler Explorer][example1].
 
 ## Default type promotion
 
@@ -186,9 +184,21 @@ understand, variadic templates – which will be discussed in the second part of
 Variadic functions with `va_arg` support have both pros and cons. They give you freedom and flexibility in handling
 particular tasks. But also they require a strict contract between the caller and the callee, which is hard to maintain.
 They are not type safe (only rely on the contract) and can lead to undefined behavior. There are multiple
-recommendations to avoid it (e.g. [C++ Core
-Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#f55-dont-use-va_arg-arguments) and [SEI CERT
-C++ Coding
-Standard](https://wiki.sei.cmu.edu/confluence/display/cplusplus/DCL50-CPP.+Do+not+define+a+C-style+variadic+function)),
-which I agree with. However I you have no other option or you have to use an API that already takes the `va_args` – be
-careful and RTFM!
+recommendations to avoid it (e.g. [C++ Core Guidelines][cpp-core-guidelines] and [SEI CERT C++ Coding
+Standard][sei-cert-cpp]), which I agree with. However I you have no other option or you have to use an API that already
+takes the `va_args` – be careful and RTFM!
+
+<!-- links -->
+
+[cppreference-variadic]: https://en.cppreference.com/w/cpp/utility/variadic
+[part2]: variadic-functions--part-2-c11-variadic-templates.md
+[part3]: variadic-functions--part-3-techniques-of-variadic-templates.md
+[c-standard]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2346.pdf
+[cpp-cstdarg]: http://eel.is/c++draft/cstdarg.syn
+[cppreference-cstdarg]: https://en.cppreference.com/w/cpp/header/cstdarg
+[apple-kernel]: https://opensource.apple.com/source/xnu/xnu-792.13.8/EXTERNAL_HEADERS/stdarg.h
+[systemv-spec]: https://software.intel.com/sites/default/files/article/402129/mpx-linux64-abi.pdf
+[example1]: https://godbolt.org/z/nD5OAZ
+[cpp-core-guidelines]: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#f55-dont-use-va_arg-arguments
+[sei-cert-cpp]:
+    https://wiki.sei.cmu.edu/confluence/display/cplusplus/DCL50-CPP.+Do+not+define+a+C-style+variadic+function

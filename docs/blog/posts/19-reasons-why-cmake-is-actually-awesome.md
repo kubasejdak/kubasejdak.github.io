@@ -525,14 +525,14 @@ cmake <PATH_TO_SOURCES> --graphviz=graph/test.dot
 
 Here is an example graph (`graph/test.dot`):
 
-![Graphviz example](../../assets/graphviz_example.png)
+![Graphviz example][graphviz-example]
 
 ## Summary
 
 CMake is a powerful tool. It may have been hard to use in the past, but now with a bit of a good will it can really
 empower you in managing even most complicated build systems. Give it a try and I know you won’t regret it.
 
-<!-- Links -->
+<!-- links -->
 
 [cmake-docs]: https://cmake.org/cmake/help/latest/index.html
 [modern-cmake]: modern-cmake-is-like-inheritance.md
@@ -548,3 +548,4 @@ empower you in managing even most complicated build systems. Give it a try and I
 [cmake-file]: https://cmake.org/cmake/help/latest/command/file.html
 [cmake-gui]: https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html
 [cmake-modules]: https://cmake.org/cmake/help/latest/manual/cmake-modules.7.html#find-modules
+[graphviz-example]: ../../assets/graphviz_example.png
