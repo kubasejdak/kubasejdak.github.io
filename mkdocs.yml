@@ -104,4 +104,6 @@ nav:
   - BLOG:
       - blog/index.md
   - PROJECTS: https://github.com/kubasejdak-org
+  - SERVICES:
+      - Services: services.md
   - TAGS: tags.md
