@@ -99,11 +99,9 @@ hooks:
   - hooks/hooks.py
 
 nav:
-  - HOME:
-      - kubasejdak.com: index.md
+  - HOME: index.md
   - BLOG:
       - blog/index.md
   - PROJECTS: https://github.com/kubasejdak-org
-  - SERVICES:
-      - Services: services.md
+  - SERVICES: services.md
   - TAGS: tags.md
