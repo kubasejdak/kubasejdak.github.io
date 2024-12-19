@@ -100,9 +100,10 @@ hooks:
   - hooks/hooks.py
 
 nav:
-  - HOME: index.md
-  - BLOG:
+  - Home: index.md
+  - Blog:
       - blog/index.md
-  - PROJECTS: https://github.com/kubasejdak-org
-  - SERVICES: services.md
-  - TAGS: tags.md
+  - Projects: https://github.com/kubasejdak-org
+  - Services: services.md
+  - About Me: about.md
+  - Tags: tags.md
