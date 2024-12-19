@@ -41,16 +41,16 @@ Below you can find a brief summary of my professional life. You can also downloa
 
 | COMPANY                         | POSITION                  | PERIOD            |
 | ------------------------------- | ------------------------- | ----------------- |
-| TRUMPF Huettinger               | Software Architect        | 07.2023 – now     |
-| TRUMPF Huettinger               | Senior Software Engineer  | 07.2022 – 06.2023 |
-| TRUMPF Huettinger               | Software Engineer         | 01.2019 – 06.2022 |
+| TRUMPF Huettinger               | Software Architect        | 07.2023 - now     |
+| TRUMPF Huettinger               | Senior Software Engineer  | 07.2022 - 06.2023 |
+| TRUMPF Huettinger               | Software Engineer         | 01.2019 - 06.2022 |
 | Polish C++ Standardization Body | Technical Expert Member   | 09.2019 - 03.2022 |
-| Mobica                          | Senior Software Engineer  | 09.2017 – 12.2018 |
-| Phoenix Systems                 | Operating System Engineer | 05.2015 – 07.2017 |
-| Samsung Electronics R&D         | Software Engineer         | 03.2014 – 04.2015 |
-| Samsung Electronics R&D         | Junior Software Engineer  | 06.2012 – 02.2014 |
+| Mobica                          | Senior Software Engineer  | 09.2017 - 12.2018 |
+| Phoenix Systems                 | Operating System Engineer | 05.2015 - 07.2017 |
+| Samsung Electronics R&D         | Software Engineer         | 03.2014 - 04.2015 |
+| Samsung Electronics R&D         | Junior Software Engineer  | 06.2012 - 02.2014 |
 | RRW Automatic                   | Freelancer                | 12.2011           |
-| Samsung Electronics R&D         | Internship                | 07.2011 – 09.2011 |
+| Samsung Electronics R&D         | Internship                | 07.2011 - 09.2011 |
 | RRW Automatic                   | Freelancer                | 04.2011           |
 
 ## Commercial work
