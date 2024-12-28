@@ -67,7 +67,7 @@ variables or argument in related functions, so make it meaningful and unique.
 
 Everything happens at the “configure” (generation) stage, once CMake reaches `FetchContent_MakeAvailable(platform)`
 command. This is important to remember and understand, because generation step is usually done once and `FetchContent`
-can influence this process. `FetchContent_MakeAvailable` command is executed only once for every resource during cmake
+can influence this process. `FetchContent_MakeAvailable` command is executed only once for every resource during CMake
 configuration. Consider those two functions as the `FetchContent` idiom.
 
 !!! info
@@ -77,7 +77,7 @@ configuration. Consider those two functions as the `FetchContent` idiom.
 By default, everything is downloaded into your build directory in a well-defined structure:
 
 ```
-${CMAKE_CURRENT_BINARY_DIR}/
+${CMAKE_BINARY_DIR}/
   - _deps/
     - <resource_name>-build
     - <resource_name>-src
@@ -97,10 +97,10 @@ locate the new data:
 - `<resource_name>_SOURCE_DIR` – specifies the location of the downloaded sources,
 - `<resource_name>_BINARY_DIR` – specifies where is the default build directory for the downloaded sources.
 
-`FetchContent_MakeAvailable(<resource_name>)` triggers both download and includes that sources to our build system as if
-they were already part of our codebase.
+However using them directly is not needed thanks to `FetchContent_MakeAvailable(<resource_name>)` command. It both
+downloads and includes that sources to our build system as if they were already part of our codebase.
 
-From now on, downlo directory is subject to all CMake settings of the main project and from the build system point of
+From now on, downloded directory is subject to all CMake settings of the main project and from the build system point of
 view is treated as the local sources.
 
 ## `ExternalProject`
@@ -225,8 +225,8 @@ result in an error. You can explicitly ask CMake to skip that part by adding add
 ```cmake linenums="1"
 include(FetchContent)
 FetchContent_Declare(platform
-    GIT_REPOSITORY        https://github.com/kubasejdak/platform.git
-    GIT_TAG               origin/master
+    GIT_REPOSITORY        https://github.com/kubasejdak-org/platform.git
+    GIT_TAG               main
     UPDATE_DISCONNECTED   ON
 )
 
@@ -242,7 +242,7 @@ healthy connection.
     it breaks dependent projects. It would be really annoying to do this using Git (it could generate a lot of trash
     commits).
 
-### Choosing the right place to run `FetchContent`
+### Choosing the right place to "run" `FetchContent`
 
 `FetchContent` runs at the generation stage, so choosing the place where it is declared determines which parts of the
 build system could interact with the fetched content.
@@ -250,10 +250,16 @@ build system could interact with the fetched content.
 For example, `FetchContent` can be run before `project()` function (both declare and make available statements). This
 could allow you to setup custom toolchain (via `CMAKE_TOOLCHAIN_FILE`) which is downloaded from the company’s server.
 
+!!! note
+
+    `FetchContent_Declare()` only declares what and from where should be downloaded. `FetchContent_MakeAvailable()`
+    actually does the job.
+
 ### Specifying subdirectory of referenced content
 
-If you need to get to the specific directory, then you have to do it by hand, e.g. my HAL project requires, that clients
-should use only lib directory, while root path is used to launch tests, generate documentation etc.:
+By default `FetchContent` blindly adds root of downloaded content to the build system. If you need to bypass it and get
+to the specific directory, then you have to do it by hand, e.g. my HAL project requires, that clients should use only
+`lib` directory, while root path is used to launch tests, generate documentation etc.:
 
 ```cmake linenums="1"
 include(FetchContent)
@@ -266,8 +272,10 @@ FetchContent_Declare(hal
 FetchContent_MakeAvailable(hal)
 ```
 
-I also like to put FetchContent commands in the separate files called `<resource_name>.cmake` and include them in other
-`CMakeLists.txt` where needed:
+### Organizing `FetchContent` declarations
+
+I also like to put `FetchContent` commands in the separate files called `<resource_name>.cmake` and include them in
+other `CMakeLists.txt` where needed:
 
 ```cmake linenums="1"
 # cmake/platform.cmake
