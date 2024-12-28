@@ -95,6 +95,8 @@ extra:
       link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
     - icon: simple/x
       link: https://x.com/kubasejdak
+    - icon: simple/rss
+      link: /feed_rss_created.xml 
 
 hooks:
   - hooks/hooks.py
