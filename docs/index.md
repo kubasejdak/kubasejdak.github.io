@@ -19,6 +19,6 @@ I like to drink :beers:
 
 </div>
 
-<!-- LINKS -->
+<!-- links -->
 
 [platform]: https://github.com/kubasejdak-org/platform
