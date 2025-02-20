@@ -13,16 +13,16 @@ theme:
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: green
-      accent: deep orange
+      primary: deep purple
+      accent: red
     # Dark Mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: green
-      accent: deep purple
+      primary: deep purple
+      accent: teal
   features:
     - content.code.annotate
     - content.code.copy
@@ -31,6 +31,7 @@ theme:
     - navigation.footer
     - navigation.instant
     - navigation.instant.progress
+    - navigation.sections
     - navigation.tabs
     - navigation.top
     - search.highlight
@@ -92,8 +93,8 @@ extra:
       link: https://github.com/kubasejdak-org
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/kuba-sejdak-41b06165/
-    - icon: fontawesome/brands/x-twitter
-      link: https://x.com/kubasejdak
+    - icon: fontawesome/brands/bluesky
+      link: https://bsky.app/profile/kubasejdak.bsky.social
     - icon: fontawesome/solid/rss
       link: /feed_rss_created.xml
 
