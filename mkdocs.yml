@@ -97,6 +97,9 @@ extra:
     - icon: fontawesome/solid/rss
       link: /feed_rss_created.xml
 
+extra_css:
+  - stylesheets/extra.css
+
 hooks:
   - hooks/hooks.py
 

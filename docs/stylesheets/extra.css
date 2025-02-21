@@ -1,0 +1,4 @@
+/* Capitalize top navigation bar items */
+.md-tabs__link {
+    text-transform: uppercase;
+}
