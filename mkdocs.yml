@@ -13,7 +13,7 @@ theme:
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: black
+      primary: deep purple
       accent: red
     # Dark Mode
     - media: "(prefers-color-scheme: dark)"
