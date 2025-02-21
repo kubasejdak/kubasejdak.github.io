@@ -13,7 +13,7 @@ theme:
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: deep purple
+      primary: black
       accent: red
     # Dark Mode
     - media: "(prefers-color-scheme: dark)"
@@ -21,7 +21,7 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: deep purple
+      primary: black
       accent: teal
   features:
     - content.code.annotate
@@ -31,7 +31,6 @@ theme:
     - navigation.footer
     - navigation.instant
     - navigation.instant.progress
-    - navigation.sections
     - navigation.tabs
     - navigation.top
     - search.highlight
