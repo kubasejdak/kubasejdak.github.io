@@ -12,6 +12,74 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+
+    .intro-text {
+        text-align: left;
+        margin-top: 4rem;
+        padding: 20px;
+    }
+
+    .intro-text h1 {
+        margin: 0;
+        color: white;
+        font-weight: bold;
+        font-size: 3rem;
+    }
+
+    .intro-text h2 {
+        margin: 40px 0 0 0;
+        color: white;
+        font-weight: bold;
+    }
+
+    .intro-text-background {
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 10px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-start;
+    }
+
+    .buttons a {
+        text-decoration: none;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 15px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        display: inline-block;
+        width: 150px;
+    }
+
+    .buttons a:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
 </style>
+
+<div class="intro-text intro-text-background">
+    <h1>Kuba Sejdak</h1>
+    <h2>
+        Software Architect with over <span id="years-experience"></span> years of professional programming experience in
+        C/C++
+    </h2>
+</div>
+
+<div class="buttons">
+    <a href="/blog">Blog</a>
+    <a href="https://github.com/kubasejdak-org">Projects</a>
+    <a href="/about">About Me</a>
+</div>
+
+<script>
+    const startYear = 2012;
+    const currentYear = new Date().getFullYear();
+    const yearsExperience = currentYear - startYear;
+    document.getElementById('years-experience').textContent = yearsExperience;
+</script>
 
 {% endblock %}
