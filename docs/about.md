@@ -152,7 +152,7 @@ one-by-one 🙂 If I really have to go out, then I run or ride my Yamaha FZ6 Faz
 
 <!-- links -->
 
-[casual-photo-sofa]: assets/casual_photo_sofa.png
+[casual-photo-sofa]: assets/casual-photo-sofa.png
 [cv]: /cv
 [perspektywy-ranking]: http://licea.perspektywy.pl
-[casual-photo-moto]: assets/casual_photo_moto.png
+[casual-photo-moto]: assets/casual-photo-moto.png

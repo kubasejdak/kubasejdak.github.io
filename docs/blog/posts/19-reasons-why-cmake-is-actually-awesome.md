@@ -548,4 +548,4 @@ empower you in managing even most complicated build systems. Give it a try and I
 [cmake-file]: https://cmake.org/cmake/help/latest/command/file.html
 [cmake-gui]: https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html
 [cmake-modules]: https://cmake.org/cmake/help/latest/manual/cmake-modules.7.html#find-modules
-[graphviz-example]: ../../assets/graphviz_example.png
+[graphviz-example]: ../../assets/graphviz-example.png
