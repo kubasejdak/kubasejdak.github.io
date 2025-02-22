@@ -23,7 +23,7 @@
         margin: 0;
         color: white;
         font-weight: bold;
-        font-size: 3rem;
+        font-size: 2rem;
     }
 
     .intro-text h2 {
@@ -37,14 +37,14 @@
         border-radius: 10px;
     }
 
-    .buttons {
+    .intro-buttons {
         margin-top: 20px;
         display: flex;
         gap: 10px;
         justify-content: flex-start;
     }
 
-    .buttons a {
+    .intro-buttons a {
         text-decoration: none;
         color: white;
         background-color: rgba(0, 0, 0, 0.6);
@@ -56,7 +56,7 @@
         width: 150px;
     }
 
-    .buttons a:hover {
+    .intro-buttons a:hover {
         background-color: rgba(0, 0, 0, 0.8);
     }
 </style>
@@ -64,12 +64,11 @@
 <div class="intro-text intro-text-background">
     <h1>Kuba Sejdak</h1>
     <h2>
-        Software Architect with over <span id="years-experience"></span> years of professional programming experience in
-        C/C++
+        Software Architect with over <span id="experience"></span> years of professional programming experience in C/C++
     </h2>
 </div>
 
-<div class="buttons">
+<div class="intro-buttons">
     <a href="/blog">Blog</a>
     <a href="https://github.com/kubasejdak-org">Projects</a>
     <a href="/about">About Me</a>
@@ -79,7 +78,7 @@
     const startYear = 2012;
     const currentYear = new Date().getFullYear();
     const yearsExperience = currentYear - startYear;
-    document.getElementById('years-experience').textContent = yearsExperience;
+    document.getElementById("experience").textContent = yearsExperience;
 </script>
 
 {% endblock %}
