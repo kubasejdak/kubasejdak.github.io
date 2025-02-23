@@ -7,10 +7,7 @@
         margin: 0;
         padding: 0;
         height: 100%;
-        background-image: url("assets/home-background-christmas1.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-color: #000;
     }
 
     .intro-text {
@@ -91,6 +88,11 @@
     const currentYear = new Date().getFullYear();
     const yearsExperience = currentYear - startYear;
     document.getElementById("experience").textContent = yearsExperience;
+
+    // Lazy load the background image
+    window.addEventListener('load', function () {
+        document.body.style.backgroundImage = 'url("assets/home-background-christmas1.jpg")';
+    });
 </script>
 
 {% endblock %}
