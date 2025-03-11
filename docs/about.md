@@ -94,9 +94,9 @@ TODO
 
 ### Samsung Electronics R&D (Software Engineer)
 
-- **Award (2015): Bonus award for the hard work and participation in the Tizen TV project.**
-- **Award (2014): Highest performance appraisal in the part (~ 20 people) at the end of year.**
-- **Award (2014): Best employee in the group (~ 80 people).**
+- :trophy: **Award (2015): Bonus award for the hard work and participation in the Tizen TV project.**
+- :trophy: **Award (2014): Highest performance appraisal in the part (~ 20 people) at the end of year.**
+- :trophy: **Award (2014): Best employee in the group (~ 80 people).**
 - Design and implementation of multiple modules in the SMART TV software upgrade.
 - Integrating software upgrade with the Tizen operating system (embedded Linux).
 - Leader of the internal project with 2 trainees.
@@ -104,8 +104,8 @@ TODO
 
 ### Samsung Electronics R&D (Junior Software Engineer)
 
-- **Award (2013): Highest performance appraisal in the part (~20 people) at the end of the year.**
-- **Award (2013): SRPOL 2013 4Q Award.**
+- :trophy: **Award (2013): Highest performance appraisal in the part (~20 people) at the end of the year.**
+- :trophy: **Award (2013): SRPOL 2013 4Q Award.**
 - Implementation of the DVB and ISDB analysis tools.
 - Design and implementation of the OTA upgrade transportation protocol for the SMART TV.
 - SMART TV software upgrade development: OTN, OTA, USB.
@@ -132,10 +132,10 @@ TODO
 ### Warsaw University of Technology
 
 - Faculty of Electronics and Information Technology – Computer Science
-  - Engineer’s Thesis: Shellcode similarity analysis by means of its execution graph.
-  - Masters’s Thesis: Methodology of hiding malicious code from antivirus engines.
-  - **Award (2013): Graduation with distinction for the Engineer’s Thesis and very good marks.**
-  - **Award (2014): Graduation with distinction for the Master’s Thesis and very good marks.**
+  - :mortar_board: Engineer’s Thesis: Shellcode similarity analysis by means of its execution graph.
+  - :mortar_board: Masters’s Thesis: Methodology of hiding malicious code from antivirus engines.
+  - :trophy: **Award (2013): Graduation with distinction for the Engineer’s Thesis and very good marks.**
+  - :trophy: **Award (2014): Graduation with distinction for the Master’s Thesis and very good marks.**
 
 ### XIV High School im. Stanisława Staszica in Warsaw
 
