@@ -1,5 +1,8 @@
-# Tags
+---
+hide:
+  - navigation
+---
 
-Following is a list of relevant tags:
+# Tags
 
 <!-- material/tags -->

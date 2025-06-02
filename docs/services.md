@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Services
 
 Thanks for trusting me. I believe in working in a way, that I won’t have to be ashamed of it in the future. I will make
