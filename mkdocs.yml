@@ -27,22 +27,24 @@ theme:
     - content.code.annotate
     - content.code.copy
     - content.tabs.link
-    - navigation.expand
     - navigation.footer
+    - navigation.indexes
     - navigation.instant
     - navigation.instant.progress
+    - navigation.sections
     - navigation.tabs
     - navigation.top
     - search.highlight
     - search.share
     - search.suggest
     - toc.follow
-    - toc.integrate
   custom_dir: overrides
 
 plugins:
   - blog:
       post_url_format: "{slug}"
+  - drawio
+  - macros
   - redirects:
       redirect_maps:
         "let-the-games-begin.md": "blog/posts/let-the-games-begin.md"
@@ -83,7 +85,6 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - toc:
-      toc_depth: 2
       permalink: true
 
 extra:
@@ -100,8 +101,9 @@ extra:
 extra_css:
   - stylesheets/extra.css
 
-hooks:
-  - hooks/hooks.py
+extra_javascript:
+  - https://viewer.diagrams.net/js/viewer-static.min.js
+  - js/drawio-reload.js
 
 nav:
   - Home: index.md

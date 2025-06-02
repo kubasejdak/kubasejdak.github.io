@@ -10,9 +10,11 @@
         "vscode": {
             "extensions": [
                 "bierner.markdown-mermaid",
-                "github.copilot",
-                "github.vscode-github-actions",
+                "davidanson.vscode-markdownlint",
+                "editorconfig.editorconfig",
+                "hediet.vscode-drawio",
                 "mads-hartmann.bash-ide-vscode",
+                "ms-python.python",
                 "ms-vsliveshare.vsliveshare",
                 "redhat.vscode-yaml",
                 "stkb.rewrap",

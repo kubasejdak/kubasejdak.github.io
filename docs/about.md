@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # About Me
 
 Hi! My name is Kuba: I do designing and programming in C++ for a living. After hours I admire its beauty and work on

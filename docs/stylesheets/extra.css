@@ -1,3 +1,8 @@
+/* Reduce empty space on left and right size of the page */
+.md-grid {
+  max-width: 90%;
+}
+
 /* Capitalize top navigation bar items */
 .md-tabs__link {
     text-transform: uppercase;
