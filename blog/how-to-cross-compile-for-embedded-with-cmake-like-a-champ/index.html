@@ -1,0 +1,1572 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal website of Kuba Sejdak">
+      
+      
+      
+        <link rel="canonical" href="https://kubasejdak.github.io/blog/how-to-cross-compile-for-embedded-with-cmake-like-a-champ/">
+      
+      
+        <link rel="prev" href="../how-to-join-repositories-in-cmake/">
+      
+      
+        <link rel="next" href="../problems-with-external-dependencies-in-c/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>How to cross-compile for embedded with CMake like a champ - kubasejdak.com</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="How to cross-compile for embedded with CMake like a champ - kubasejdak.com" >
+      
+        <meta  property="og:description"  content="Personal website of Kuba Sejdak" >
+      
+        <meta  property="og:image"  content="https://kubasejdak.github.io/assets/images/social/blog/posts/how-to-cross-compile-for-embedded-with-cmake-like-a-champ.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://kubasejdak.github.io/blog/how-to-cross-compile-for-embedded-with-cmake-like-a-champ/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="How to cross-compile for embedded with CMake like a champ - kubasejdak.com" >
+      
+        <meta  name="twitter:description"  content="Personal website of Kuba Sejdak" >
+      
+        <meta  name="twitter:image"  content="https://kubasejdak.github.io/assets/images/social/blog/posts/how-to-cross-compile-for-embedded-with-cmake-like-a-champ.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-cross-compile-for-embedded-with-cmake-like-a-champ" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="kubasejdak.com" class="md-header__button md-logo" aria-label="kubasejdak.com" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            kubasejdak.com
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to cross-compile for embedded with CMake like a champ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="red"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/kubasejdak-org" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../services/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Services
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="kubasejdak.com" class="md-nav__button md-logo" aria-label="kubasejdak.com" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    kubasejdak.com
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2021
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2020
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2019
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2018/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2018
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../category/c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    C++
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../category/personal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Personal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../category/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/kubasejdak-org" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About Me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tags
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-cmake-manages-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      How CMake manages compiler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-custom-toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting custom toolchain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structure-of-the-toolchain-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structure of the toolchain file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ready-to-use-toolchain-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ready to use toolchain file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download platform
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://github.com/kubasejdak.png" alt="Kuba Sejdak">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          Kuba Sejdak
+                        
+                      </strong>
+                      <br>
+                      Software Architect
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2020-10-15 00:00:00+00:00" class="md-ellipsis">October 15, 2020</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/tools/">Tools</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              7 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <a href="../../tags/#tag:cmake" class="md-tag">CMake</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="how-to-cross-compile-for-embedded-with-cmake-like-a-champ">How to cross-compile for embedded with CMake like a champ<a class="headerlink" href="#how-to-cross-compile-for-embedded-with-cmake-like-a-champ" title="Permanent link">&para;</a></h1>
+<p>The power of CMake lies in the fact, that it is both cross-platform in terms of build host and allows cross-compilation
+for different targets at the same time. In other words, we can build projects from any platform to any platform as long
+as we have proper tools (usually called toolchains). However many people don’t know about this and try to come up with a
+sophisticated handmade solution or put complex logic into <code>CMakeLists.txt</code> files in order to setup the environment.
+Today I’m going to show you how to enable cross-compilation for your project with CMake, basing on the embedded platform
+case.</p>
+<!-- more -->
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here I use an embedded system example, but the described mechanisms will work for any other platform.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Update</p>
+<p>Examples updated to reflect state in January 2025.</p>
+</div>
+<h2 id="how-cmake-manages-compiler">How CMake manages compiler<a class="headerlink" href="#how-cmake-manages-compiler" title="Permanent link">&para;</a></h2>
+<p>Before we can switch to cross-compilation, it is crucial to understand how CMake handles compiler detection, how we can
+extract information about current toolchain and what is the target platform.</p>
+<p>If you run CMake in the console (or in IDE which shows CMake output) you can usually see, that in the beginning there
+are some log messages reporting what is the detected compiler. Below you can find sample output from one of my projects:</p>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="err">--</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">ASM</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">identification</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">GNU</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="err">--</span><span class="w"> </span><span class="err">Found</span><span class="w"> </span><span class="err">assembler:</span><span class="w"> </span><span class="err">/opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gcc</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="err">--</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">C</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">identification</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">GNU</span><span class="w"> </span><span class="err">13.3.1</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="err">--</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">CXX</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">identification</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">GNU</span><span class="w"> </span><span class="err">13.3.1</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">C</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">ABI</span><span class="w"> </span><span class="err">info</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">C</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">ABI</span><span class="w"> </span><span class="err">info</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">done</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="err">--</span><span class="w"> </span><span class="err">Check</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">working</span><span class="w"> </span><span class="err">C</span><span class="w"> </span><span class="err">compiler:</span><span class="w"> </span><span class="err">/opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gcc</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">skipped</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">C</span><span class="w"> </span><span class="err">compile</span><span class="w"> </span><span class="err">features</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">C</span><span class="w"> </span><span class="err">compile</span><span class="w"> </span><span class="err">features</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">done</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">CXX</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">ABI</span><span class="w"> </span><span class="err">info</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">CXX</span><span class="w"> </span><span class="err">compiler</span><span class="w"> </span><span class="err">ABI</span><span class="w"> </span><span class="err">info</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">done</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="err">--</span><span class="w"> </span><span class="err">Check</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">working</span><span class="w"> </span><span class="err">CXX</span><span class="w"> </span><span class="err">compiler:</span><span class="w"> </span><span class="err">/opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-g++</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">skipped</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">CXX</span><span class="w"> </span><span class="err">compile</span><span class="w"> </span><span class="err">features</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="err">--</span><span class="w"> </span><span class="err">Detecting</span><span class="w"> </span><span class="err">CXX</span><span class="w"> </span><span class="err">compile</span><span class="w"> </span><span class="err">features</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">done</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Here you can see, that I’m using <code>arm-none-linux-gnueabihf-gcc</code> <code>13.3.1</code> C compiler and <code>arm-none-linux-gnueabihf-g++</code>
+<code>13.3.1</code> C++ compiler. But how does CMake know which compiler to use? After all, you can have multiple toolchains
+installed in your system. The answer is simple: it checks the <code>CC</code> and <code>CXX</code> environment variables. They define what is
+the default compiler in the system. If you manually set <code>CC</code> or <code>CXX</code> to different values, then CMake will use these new
+settings as default compilers. Of course, you may try to set it to something completely rubbish, but CMake will usually
+verify if the given compiler is usable. After successful detection, CMake stores info about the current toolchain in the
+following variables:</p>
+<ul>
+<li><code>CMAKE_C_COMPILER</code>,</li>
+<li><code>CMAKE_CXX_COMPILER</code>.</li>
+</ul>
+<p>They contain paths to the C and C++ compilers respectively. This is usually enough on desktop platforms. In the case of
+the embedded systems, we often need also custom linker and assembler. In the more complex projects you may need to
+additionally specify binaries to other parts of the toolchain (<code>size</code>, <code>ranlib</code>, <code>objcopy</code>...). All these tools should
+be set in the corresponding variables:</p>
+<ul>
+<li><code>CMAKE_AR</code>,</li>
+<li><code>CMAKE_ASM_COMPILER</code>,</li>
+<li><code>CMAKE_LINKER</code>,</li>
+<li><code>CMAKE_OBJCOPY</code>,</li>
+<li><code>CMAKE_RANLIB</code>.</li>
+</ul>
+<p>As for the host and target operating systems, CMake stores their names in the following variables:</p>
+<ul>
+<li><a href="https://cmake.org/cmake/help/latest/variable/CMAKE_HOST_SYSTEM_NAME.html">CMAKE_HOST_SYSTEM_NAME</a> – name of the platform, on which CMake is running (host platform). On
+major operating systems this is set to the <code>Linux</code>, <code>Windows</code> or <code>Darwin</code> (MacOS) value.</li>
+<li><a href="https://cmake.org/cmake/help/latest/variable/CMAKE_SYSTEM_NAME.html">CMAKE_SYSTEM_NAME</a> – name of the platform, for which we are building (target platform). By default,
+this value is the same as <code>CMAKE_HOST_SYSTEM_NAME</code>, which means that we are building for local platform (no
+cross-compilation).</li>
+</ul>
+<h2 id="setting-custom-toolchain">Setting custom toolchain<a class="headerlink" href="#setting-custom-toolchain" title="Permanent link">&para;</a></h2>
+<p>When we cross-compile to another platform, we have to specify completely different toolchain both in terms of name and
+location of the binaries.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Toolchain name usually contains the so-called target triple, which is in the form of <code>&lt;arch&gt;-&lt;system&gt;-&lt;abi&gt;</code>or in a
+longer form <code>&lt;arch&gt;-&lt;vendor&gt;-&lt;system&gt;-&lt;abi&gt;</code>, e.g. <code>arm-linux-gnueabihf</code>. Typically, local toolchains have symbolic
+links that omit triple in binary name: we use <code>gcc</code> instead of the full name <code>x86_64-linux-gnu-gcc</code>.</p>
+</div>
+<p>This can be done in two ways:</p>
+<ol>
+<li>pass values for the toolchain variables from the command line,</li>
+<li>specify toolchain file.</li>
+</ol>
+<p>First option is very explicit thus easy to understand, but big number of arguments makes it harder to use CMake in
+terminal:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_C_COMPILER<span class="o">=</span>&lt;path_to_c_compiler&gt;<span class="w"> </span>-DCMAKE_CXX_COMPILER<span class="o">=</span>&lt;path_to_cxx_compiler&gt;<span class="w"> </span>-DCMAKE_AR<span class="o">=</span>&lt;path_to_ar&gt;<span class="w"> </span>-DCMAKE_LINKER<span class="o">=</span>&lt;path_to_linker&gt;<span class="w"> </span>etc...
+</span></code></pre></div>
+<p>In such a case you would probably want to put it into some kind of script.</p>
+<p>Second option is more elegant and is the preferred way of choosing the toolchain. All you need to do is to put toolchain
+variables into a separate file (e.g. <code>&lt;toolchain_name&gt;.cmake</code>) and set <code>CMAKE_TOOLCHAIN_FILE</code> variable to the path of
+that file. This can be done both in the command line or in <code>CMakeLists.txt</code> before <code>project()</code> command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>&lt;path_to_toolchain_file&gt;
+</span></code></pre></div>
+<p>or:</p>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.15</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_TOOLCHAIN_FILE</span><span class="w"> </span><span class="s">&lt;path_to_toolchain_file&gt;</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nb">project</span><span class="p">(</span><span class="s">&lt;project_name&gt;</span><span class="w"> </span><span class="s">C</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>In both cases, CMake will not try to detect default system toolchain but will blindly use whatever you provide.</p>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>It is crucial to set the value of <code>CMAKE_TOOLCHAIN_FILE</code> before <code>project()</code> is invoked, because <code>project()</code> triggers
+toolchain detection and verification.</p>
+</div>
+<h2 id="structure-of-the-toolchain-file">Structure of the toolchain file<a class="headerlink" href="#structure-of-the-toolchain-file" title="Permanent link">&para;</a></h2>
+<p>In fact, toolchain file doesn’t have any structure. You can put anything you want there. But the best practice is to
+define at least these settings:</p>
+<ul>
+<li>path to the toolchain binaries (C compiler, C++ compiler, linker, etc.):</li>
+</ul>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span>
+<span class="normal"><a href="#__codelineno-4-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_AR</span><span class="w">                    </span><span class="s">&lt;path_to_ar&gt;</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_ASM_COMPILER</span><span class="w">          </span><span class="s">&lt;path_to_assembler&gt;</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span><span class="w">            </span><span class="s">&lt;path_to_c_compiler</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span><span class="w">          </span><span class="s">&lt;path_to_cpp_compiler</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_LINKER</span><span class="w">                </span><span class="s">&lt;path_to_linker&gt;</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_OBJCOPY</span><span class="w">               </span><span class="s">&lt;path_to_objcopy&gt;</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_RANLIB</span><span class="w">                </span><span class="s">&lt;path_to_ranlib&gt;</span><span class="p">)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SIZE</span><span class="w">                  </span><span class="s">&lt;path_to_size&gt;</span><span class="p">)</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_STRIP</span><span class="w">                 </span><span class="s">&lt;path_to_strip&gt;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>name of the target platform (and optionally target processor architecture):</li>
+</ul>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span><span class="w">           </span><span class="s">&lt;target_system&gt;</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_PROCESSOR</span><span class="w">      </span><span class="s">&lt;target_architecture&gt;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>required compilation and linking flags on that particular platform:</li>
+</ul>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span>
+<span class="normal"><a href="#__codelineno-6-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS</span><span class="w">               </span><span class="s">&lt;c_flags&gt;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS</span><span class="w">             </span><span class="s">&lt;cpp_flags&gt;</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_DEBUG</span><span class="w">         </span><span class="s">&lt;c_flags_for_debug&gt;</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_RELEASE</span><span class="w">       </span><span class="s">&lt;c_flags_for_release&gt;</span><span class="p">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_DEBUG</span><span class="w">       </span><span class="s">&lt;cpp_flags_for_debug&gt;</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_RELEASE</span><span class="w">     </span><span class="s">&lt;cpp_flags_for_release&gt;</span><span class="p">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_EXE_LINKER_FLAGS</span><span class="w">      </span><span class="s">&lt;linker_flags&gt;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>toolchain sysroot settings:</li>
+</ul>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span><span class="w">     </span><span class="s">NEVER</span><span class="p">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span><span class="w">     </span><span class="s">ONLY</span><span class="p">)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span><span class="w">     </span><span class="s">ONLY</span><span class="p">)</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="c"># Optionally reduce compiler sanity check when cross-compiling.</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_TRY_COMPILE_TARGET_TYPE</span><span class="w">         </span><span class="s">STATIC_LIBRARY</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Note, that in case of compilation flags I said “required”. By this I mean flags that wouldn’t make sense for any other
+platform or any other toolchain (e.g. <code>-mcpu=cortex-m4 -mfloat-abi=hard</code>). This way your toolchain file will be very
+generic and you will be able to reuse it in different projects and different applications built from the same codebase.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><code>CMAKE_CXX_FLAGS_DEBUG</code> and <code>CMAKE_CXX_FLAGS_RELEASE</code> have default values (e.g. <code>-O0 -g</code>). If you set new values
+(instead of appending them) remember, that you will lose optimization settings and debug symbols.</p>
+</div>
+<p>Setting target platform name and architecture is less important, because it has minimal impact on CMake itself.
+Sometimes 3rd party modules depend on them, so it won’t hurt if you set it correctly.</p>
+<p>One important thing to remember: if you set <code>CMAKE_SYSTEM_NAME</code> manually, CMake will automatically set
+<code>CMAKE_CROSSCOMPILING</code> to <code>TRUE</code> (regardless of the value you set). For example, if you compile from Windows to Windows
+and call <code>set(CMAKE_SYSTEM_NAME Windows)</code> before <code>project()</code>, then <code>CMAKE_CROSSCOMPILING</code> will still be <code>TRUE</code>.</p>
+<p><a href="https://cmake.org/cmake/help/latest/variable/CMAKE_FIND_ROOT_PATH_MODE_PROGRAM.html">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</a>,
+<a href="https://cmake.org/cmake/help/latest/variable/CMAKE_FIND_ROOT_PATH_MODE_LIBRARY.html">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</a> and
+<a href="https://cmake.org/cmake/help/latest/variable/CMAKE_FIND_ROOT_PATH_MODE_INCLUDE.html">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</a> are all related to the paths that should be searched
+for external packages, libraries and headers. When we are recompiling, it is crucial to tell CMake, to look for all
+“standard” components in paths related to the current toolchain.</p>
+<h2 id="ready-to-use-toolchain-file">Ready to use toolchain file<a class="headerlink" href="#ready-to-use-toolchain-file" title="Permanent link">&para;</a></h2>
+<p>If you find all the above recommendations and rules still complicated, don’t worry. Here is a complete toolchain file
+for the embedded baremetal platform. All you need to do is to provide value for the <code>BAREMETAL_ARM_TOOLCHAIN_PATH</code>
+variable, pointing to the location of your toolchain (in my case it is
+<code>/opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin/</code>).</p>
+<div class="language-cmake highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span>
+<span class="normal"><a href="#__codelineno-8-22">22</a></span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span>
+<span class="normal"><a href="#__codelineno-8-24">24</a></span>
+<span class="normal"><a href="#__codelineno-8-25">25</a></span>
+<span class="normal"><a href="#__codelineno-8-26">26</a></span>
+<span class="normal"><a href="#__codelineno-8-27">27</a></span>
+<span class="normal"><a href="#__codelineno-8-28">28</a></span>
+<span class="normal"><a href="#__codelineno-8-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span><span class="w">               </span><span class="s">Generic</span><span class="p">)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_PROCESSOR</span><span class="w">          </span><span class="s">arm</span><span class="p">)</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="c"># Without that flag CMake is not able to pass test compilation check</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_TRY_COMPILE_TARGET_TYPE</span><span class="w">   </span><span class="s">STATIC_LIBRARY</span><span class="p">)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_AR</span><span class="w">                        </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-ar</span><span class="p">)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_ASM_COMPILER</span><span class="w">              </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-gcc</span><span class="p">)</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span><span class="w">                </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-gcc</span><span class="p">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span><span class="w">              </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-g++</span><span class="p">)</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_LINKER</span><span class="w">                    </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-ld</span><span class="p">)</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_OBJCOPY</span><span class="w">                   </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-objcopy</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_RANLIB</span><span class="w">                    </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-ranlib</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SIZE</span><span class="w">                      </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-size</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_STRIP</span><span class="w">                     </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-strip</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_GCOV</span><span class="w">                      </span><span class="o">${</span><span class="nv">BAREMETAL_ARM_TOOLCHAIN_PATH</span><span class="o">}</span><span class="s">/bin/arm-none-eabi-gcov</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17"></a>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="nb">set</span><span class="p">(</span><span class="s">COMMON_FLAGS</span><span class="w">                    </span><span class="s2">&quot;-Wno-psabi --specs=nosys.specs -fdata-sections -ffunction-sections -Wl,--gc-sections&quot;</span><span class="p">)</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS</span><span class="w">                   </span><span class="s2">&quot;${COMMON_FLAGS} ${APP_C_FLAGS} &quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS</span><span class="w">                 </span><span class="s2">&quot;${COMMON_FLAGS} -fno-exceptions ${APP_CXX_FLAGS}&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21"></a>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_DEBUG</span><span class="w">             </span><span class="s2">&quot;-Os -g&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_RELEASE</span><span class="w">           </span><span class="s2">&quot;-Os -DNDEBUG&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_DEBUG</span><span class="w">           </span><span class="s2">&quot;${CMAKE_C_FLAGS_DEBUG}&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_RELEASE</span><span class="w">         </span><span class="s2">&quot;${CMAKE_C_FLAGS_RELEASE}&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">INTERNAL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26"></a>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span><span class="w"> </span><span class="s">NEVER</span><span class="p">)</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span><span class="w"> </span><span class="s">ONLY</span><span class="p">)</span>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span><span class="w"> </span><span class="s">ONLY</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>This toolchain file is part of a more generic project called <code>platform</code>, where you can find many operating
+system/compiler settings for various platforms. As for the date of publishing this article, it supports the following
+configurations:</p>
+<ul>
+<li>(native) Linux (<code>gcc-11</code>, <code>gcc-13</code>, <code>clang-14</code>, <code>clang-18</code>),</li>
+<li>(cross) Linux ARM (<code>aarch64-none-linux-gnu-gcc-11</code>, <code>aarch64-none-linux-gnu-gcc-13</code>,
+  <code>aarch64-none-linux-gnu-clang-14</code>, <code>aarch64-none-linux-gnu-clang-18</code>),</li>
+<li>(cross) baremetal ARM (<code>arm-none-eabi-gcc</code>, <code>arm-none-eabi-clang</code>),</li>
+<li>(cross) FreeRTOS ARM (<code>arm-none-eabi-gcc</code>, <code>arm-none-eabi-clang</code>).</li>
+</ul>
+<h2 id="download-platform">Download platform<a class="headerlink" href="#download-platform" title="Permanent link">&para;</a></h2>
+<p><code>platform</code> project provides users with bootstrap (startup) code for each supported platform and toolchain file for that
+platform with a wide selection of compilers. Feel free to check and use it in your project. Once you understand how it
+works and its motivation, you will wonder how did you live without it.</p>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span> <strong><a href="https://github.com/kubasejdak-org/platform">platform</a></strong></p>
+<hr />
+<p>C/C++ application bootstrap layer for various hardware/OS platforms</p>
+</li>
+</ul>
+</div>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>I hope this article will be helpful to you. Cross-compilation in CMake is easy and in most cases depends only on a
+proper toolchain file. Once provided, everything else should be platform agnostic. If you have many conditional CMake
+code in your project, consider extending toolchain file to hide all the OS/compiler differences there. You’re welcome!</p>
+<!-- links -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+<h2 id="__comments">Comments</h2>
+<script src="https://giscus.app/client.js" data-repo="kubasejdak/kubasejdak.github.io" data-repo-id="R_kgDONR24pg"
+    data-category="General" data-category-id="DIC_kwDONR24ps4CkoOl" data-mapping="pathname" data-strict="0"
+    data-reactions-enabled="1" data-emit-metadata="1" data-input-position="top" data-theme="preferred_color_scheme"
+    data-lang="en" data-loading="lazy" crossorigin="anonymous" async>
+    </script>
+
+<!-- Synchronize Giscus theme with palette -->
+<script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+        var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+        // Instruct Giscus to set theme
+        giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        var ref = document.querySelector("[data-md-component=palette]")
+        ref.addEventListener("change", function () {
+            var palette = __md_get("__palette")
+            if (palette && typeof palette.color === "object") {
+                var theme = palette.color.scheme === "slate"
+                    ? "transparent_dark"
+                    : "light"
+
+                // Instruct Giscus to change theme
+                var frame = document.querySelector(".giscus-frame")
+                frame.contentWindow.postMessage(
+                    { giscus: { setConfig: { theme } } },
+                    "https://giscus.app"
+                )
+            }
+        })
+    })
+</script>
+
+      
+    </article>
+  </div>
+
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../how-to-join-repositories-in-cmake/" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to join repositories in CMake">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                How to join repositories in CMake
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../problems-with-external-dependencies-in-c/" class="md-footer__link md-footer__link--next" aria-label="Next: Problems with external dependencies in C++">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Problems with external dependencies in C++
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/kubasejdak-org" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/kuba-sejdak-41b06165/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bsky.app/profile/kubasejdak.bsky.social" target="_blank" rel="noopener" title="bsky.app" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M111.8 62.2C170.2 105.9 233 194.7 256 242.4c23-47.6 85.8-136.4 144.2-180.2 42.1-31.6 110.3-56 110.3 21.8 0 15.5-8.9 130.5-14.1 149.2-18.2 64.8-84.4 81.4-143.3 71.3C456 322 482.2 380 425.6 438c-107.4 110.2-154.3-27.6-166.3-62.9-1.7-4.9-2.6-7.8-3.3-7.8s-1.6 3-3.3 7.8c-12 35.3-59 173.1-166.3 62.9-56.5-58-30.4-116 72.5-133.5C100 314.6 33.8 298 15.7 233.1 10.4 214.4 1.5 99.4 1.5 83.9c0-77.8 68.2-53.4 110.3-21.8z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="/feed_rss_created.xml" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M0 64c0-17.7 14.3-32 32-32 229.8 0 416 186.2 416 416 0 17.7-14.3 32-32 32s-32-14.3-32-32C384 253.6 226.4 96 32 96 14.3 96 0 81.7 0 64m0 352a64 64 0 1 1 128 0 64 64 0 1 1-128 0m32-256c159.1 0 288 128.9 288 288 0 17.7-14.3 32-32 32s-32-14.3-32-32c0-123.7-100.3-224-224-224-17.7 0-32-14.3-32-32s14.3-32 32-32"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.top", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+      
+        <script src="../../js/drawio-reload.js"></script>
+      
+    
+  </body>
+</html>
