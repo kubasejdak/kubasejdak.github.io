@@ -1,6 +1,6 @@
 /* Reduce empty space on left and right size of the page */
 .md-grid {
-  max-width: 95%;
+    max-width: 95%;
 }
 
 /* Capitalize top navigation bar items */
@@ -12,7 +12,7 @@
 .md-typeset__table {
     min-width: 100%;
  }
- 
+
 .md-typeset table:not([class]) {
     display: table;
 }
