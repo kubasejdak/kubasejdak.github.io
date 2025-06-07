@@ -1,0 +1,18 @@
+/* Reduce empty space on left and right size of the page */
+.md-grid {
+    max-width: 95%;
+}
+
+/* Capitalize top navigation bar items */
+.md-tabs__link {
+    text-transform: uppercase;
+}
+
+/* Expand tables to full width */
+.md-typeset__table {
+    min-width: 100%;
+ }
+
+.md-typeset table:not([class]) {
+    display: table;
+}
